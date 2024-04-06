@@ -32,7 +32,18 @@ const payloadExample = {
  app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
+  handleRequest(req, res)
+})
 
+app.post('/', (req, res) => {
+  handleRequest(req, res)
+})
+
+app.listen(port, () => {
+  console.log(`Webhooks app listening on port ${port}`)
+})
+
+function handleRequest(req, res) {
   // TODO
   // - Parse the body
   let data = req.body;
@@ -46,8 +57,4 @@ app.get('/', (req, res) => {
   // --- deploy-preprod.sh if it is on develop
 
   res.send("Received!")
-})
-
-app.listen(port, () => {
-  console.log(`Webhooks app listening on port ${port}`)
-})
+}
