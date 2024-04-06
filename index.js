@@ -245,6 +245,7 @@ function handleRequest(req, res) {
   else {
     console.log("This is a push on another branch: ignore.")
     res.send("Ignore");
+    return;
   }
 
   // - Find out which project is concerned
