@@ -237,11 +237,9 @@ function handleRequest(req, res) {
   // - Find out branch has been pushed
   // --- If it is not main or develop, ignore and do nothing
   if (data.ref.includes(mainBranch)) {
-    console.log("This is a push on main branch: deploy");
     env = "prod";
   }
   else if (data.ref.includes(developBranch)) {
-    console.log("This is a push on develop branch: deploy-preprod");
     env = "preprod";
   }
   else {
@@ -252,7 +250,7 @@ function handleRequest(req, res) {
   // - Find out which project is concerned
   let project = data.repository.name;
 
-  console.log('[' + project + '}] deploy-' + env + '}');
+  console.log('[' + project + '] deploy-' + env);
 
   // - Launch the appropriate script according to the information above
   // --- deploy.sh if it is on main
