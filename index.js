@@ -252,7 +252,7 @@ function handleRequest(req, res) {
   // - Find out which project is concerned
   let project = data.repository.name;
 
-  console.log(`[${project}] deploy-${env}`);
+  console.log('[' + project + '}] deploy-' + env + '}');
 
   // - Launch the appropriate script according to the information above
   // --- deploy.sh if it is on main
