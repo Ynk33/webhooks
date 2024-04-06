@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require("body-parser")
 
-const port = 80;
+const port = 8008;
 
 const payloadExample = {
   "action": "opened",
@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 
   // TODO
   // - Parse the body
-  let data = body.data;
+  let data = req.body;
   console.log(data);
 
   // - Find out branch has been pushed
