@@ -1,0 +1,23 @@
+{
+  "name": "webhooks",
+  "version": "1.0.0",
+  "description": "Webhooks project for YankaDevLab",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ynk33/webhooks.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webhook",
+    "nodejs",
+    "github"
+  ],
+  "author": "Yannick Tirand",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
