@@ -36,7 +36,7 @@ mkdir $PROJECT_PATH
 
 # Git clone project
 echo Cloning $REPO_URL at $PROJECT_PATH...
-git clone $REPO_URL $PROJECT_PATH
+su - yanka -c "git clone $REPO_URL $PROJECT_PATH"
 
 echo Updating rights...
 chown -R yanka:yanka $PROJECT_PATH
@@ -47,8 +47,8 @@ echo Creating Nginx server block at $CONFIG_PATH$URL...
 cp $CONFIG_PATH"template" $CONFIG_PATH$URL
 
 echo Updating server block...
-sed -i 's/__PATH__/$PROJECT_PATH/g' $CONFIG_PATH$URL
-sed -i 's/__URL__/$URL/g' $CONFIG_PATH$URL
+sed -i "s/__PATH__/$PROJECT_PATH/g" $CONFIG_PATH$URL
+sed -i "s/__URL__/$URL/g" $CONFIG_PATH$URL
 
 echo Creating symbolic link...
 ln -s $PROJECT_PATH /etc/nginx/sites-enabled
