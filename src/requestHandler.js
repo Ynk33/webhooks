@@ -1,32 +1,34 @@
 const { exec } = require('child_process');
 
-export default function handle(req, res) {
-  
-  // Parse the request's body
-  let data = fetchData(req);
+module.exports = {
+  handle: function handle(req, res) {
+    
+    // Parse the request's body
+    let data = fetchData(req);
 
-  // Find out branch has been pushed
-  let env = fetchEnv(data);
-  // --- If it is not main or develop, ignore and do nothing
-  if (env === undefined) {
-    return;
-  }
-
-  // Fetch the project's name
-  let project = fetchProject(data);
-
-  // Launch the deploy script with the appropriate parameters
-  console.log('[' + project + '] deploy-' + env);
-
-  exec('sh ./scripts/deploy.sh ' + project.toLowerCase() + (env === 'preprod' ? ' --preprod' : ''), (error, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    if (error !== null) {
-      console.log('exec error: ' + error)
+    // Find out branch has been pushed
+    let env = fetchEnv(data);
+    // --- If it is not main or develop, ignore and do nothing
+    if (env === undefined) {
+      return;
     }
-  });
 
-  res.send("Deployment of " + project + " started in " + env);
+    // Fetch the project's name
+    let project = fetchProject(data);
+
+    // Launch the deploy script with the appropriate parameters
+    console.log('[' + project + '] deploy-' + env);
+
+    exec('sh ./scripts/deploy.sh ' + project.toLowerCase() + (env === 'preprod' ? ' --preprod' : ''), (error, stdout, stderr) => {
+      console.log(stdout);
+      console.log(stderr);
+      if (error !== null) {
+        console.log('exec error: ' + error)
+      }
+    });
+
+    res.send("Deployment of " + project + " started in " + env);
+  }
 }
 
 // Returns the json contained in the request's body.

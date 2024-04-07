@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { default: handle } = require("./src/requestHandler");
+const { handle } = require("./src/requestHandler");
 
 const port = 8008;
 
