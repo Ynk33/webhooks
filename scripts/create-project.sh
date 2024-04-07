@@ -47,13 +47,11 @@ echo Creating Nginx server block at $CONFIG_PATH$URL...
 cp $CONFIG_PATH"template" $CONFIG_PATH$URL
 
 echo Updating server block...
-echo sed -i "s|__PATH__|$PROJECT_PATH|g" $CONFIG_PATH$URL
 sed -i "s|__PATH__|$PROJECT_PATH|g" $CONFIG_PATH$URL
-echo sed -i "s|__URL__|$URL|g" $CONFIG_PATH$URL
 sed -i "s|__URL__|$URL|g" $CONFIG_PATH$URL
 
 echo Creating symbolic link...
-ln -s $PROJECT_PATH /etc/nginx/sites-enabled
+ln -s $CONFIG_PATH$URL /etc/nginx/sites-enabled
 
 echo Reloading Nginx...
 service nginx reload
