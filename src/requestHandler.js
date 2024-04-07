@@ -19,7 +19,7 @@ module.exports = {
     // Launch the deploy script with the appropriate parameters
     console.log('[' + project + '] deploy-' + env);
 
-    exec('sh ./scripts/deploy.sh ' + project.toLowerCase() + (env === 'preprod' ? ' --preprod' : ''), (error, stdout, stderr) => {
+    exec('bash ./scripts/deploy.sh ' + project.toLowerCase() + (env === 'preprod' ? ' --preprod' : ''), (error, stdout, stderr) => {
       console.log(stdout);
       console.log(stderr);
       if (error !== null) {
