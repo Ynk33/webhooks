@@ -18,6 +18,7 @@ Help() {
 PROJECT_NAME=$1
 DOMAIN="yankadevlab.tech"
 SUFFIX=""
+OPTION=""
 
 # Check if project-name is given
 if [[ -z $PROJECT_NAME ]] || [[ $PROJECT_NAME == -* ]];
@@ -42,6 +43,7 @@ do
       ;;
     --preprod)
       SUFFIX="-preprod"
+      OPTION="--preprod"
       ;;
     *)
       echo "Error: Invalid option $i"
@@ -52,11 +54,13 @@ do
 done
 
 # Check if it is the first deploy or an update
-
 if [ -d "/var/www/$PROJECT_NAME$SUFFIX.$DOMAIN" ]; then
   # Launch update-project.sh
-  echo "update project $PROJECT_NAME$SUFFIX"
+  echo "Updating project $PROJECT_NAME$SUFFIX.$DOMAIN..."
+  echo
 else
   # Launch create-project.sh
-  echo "create project $PROJECT_NAME$SUFFIX"
+  echo "Creating project $PROJECT_NAME$SUFFIX.$DOMAIN..."
+  echo
+  bash ./create-project.sh $PROJECT_NAME $OPTION
 fi

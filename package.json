@@ -6,9 +6,11 @@
     "type": "git",
     "url": "https://github.com/Ynk33/webhooks.git"
   },
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js --watch",
+    "build": "webpack",
+    "prod": "node build/server.js"
   },
   "keywords": [
     "webhook",
@@ -19,5 +21,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
   }
 }
