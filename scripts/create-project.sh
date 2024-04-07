@@ -30,10 +30,6 @@ CONFIG_PATH="/etc/nginx/sites-available/"
 LN_PATH="/etc/nginx/sites-enabled"
 REPO_URL=git@github.com:Ynk33/$PROJECT_NAME
 
-# Create folder
-echo Creating folder at $PROJECT_PATH...
-mkdir $PROJECT_PATH
-
 # Git clone project
 echo Cloning $REPO_URL at $PROJECT_PATH...
 su - yanka -c "git clone $REPO_URL $PROJECT_PATH"
