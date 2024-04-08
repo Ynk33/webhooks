@@ -31,7 +31,7 @@ REPO_URL=$GITHUB/$PROJECT_NAME
 
 # Git clone project
 echo Cloning $REPO_URL at $PROJECT_PATH...
-su - yanka -c "git clone $REPO_URL $PROJECT_PATH"
+su - yanka -c "git clone --recursive $REPO_URL $PROJECT_PATH"
 
 # Create server block
 echo Creating Nginx server block at $CONFIG_PATH$URL...
