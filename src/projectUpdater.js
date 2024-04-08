@@ -24,6 +24,6 @@ module.exports = {
       }
     });
 
-    res.send("Deployment of " + project + " started in " + env);
+    res.send("Deployment request of " + project + " in " + env + " received! Processing...");
   }
 }

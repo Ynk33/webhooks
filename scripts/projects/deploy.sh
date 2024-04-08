@@ -58,6 +58,7 @@ if [ -d "$ROOT_PATH/$PROJECT_NAME$SUFFIX.$DOMAIN" ]; then
   # Launch update-project.sh
   echo "Updating project $PROJECT_NAME$SUFFIX.$DOMAIN..."
   echo
+  bash ./scripts/projects/update-project.sh $PROJECT_NAME $OPTION
 else
   # Launch create-project.sh
   echo "Creating project $PROJECT_NAME$SUFFIX.$DOMAIN..."

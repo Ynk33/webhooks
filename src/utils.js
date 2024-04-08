@@ -37,5 +37,10 @@ module.exports = {
   // Returns the project name.
   fetchProject: function fetchProject(data) {
     return data.repository.name;
+  },
+
+  // Assess if the last commit required to ignore webhooks.
+  isIgnoringWebhooks: function isIgnoringWebHooks(data) {
+    return data.head_commit.message.includes("[IGNORE-WEBHOOKS]");
   }
 }

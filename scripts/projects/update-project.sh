@@ -3,8 +3,45 @@
 
 ### UPDATE
 
-# Git pull changes
+## Variables
+# $1: Project name
+PROJECT_NAME=$1
+SUFFIX=""
 
-# Truncate all tables
+## Options
+shift
+for i in $@
+do
+  case $i in
+    --preprod)
+      SUFFIX="-preprod"
+      ;;
+    *)
+      echo "Error: Invalid option $i"
+      exit
+      ;;
+  esac
+done
 
-# Apply dump.sql
+## Setting variables
+source .env
+URL=$PROJECT_NAME$SUFFIX.$DOMAIN
+PROJECT_PATH=$ROOT_PATH/$URL
+
+## Git pull changes
+su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules"
+
+## Truncate all tables
+mysql -u $DB_USER -p$DB_PASSWORD -Nse 'show tables' $DB_FULL_NAME |
+  while read table;
+  do 
+    mysql -h $IP_ADDRESS -u $DB_USER -p$DB_PASSWORD -e "TRUNCATE TABLE $table" $DB_FULL_NAME;
+  done
+
+## Apply dump.sql
+echo Applying dump.sql...
+sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump.sql
+mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
+
+## The end
+echo -e "\033[32mDeployment complete!\033[0m"
