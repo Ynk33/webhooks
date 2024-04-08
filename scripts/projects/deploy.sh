@@ -62,5 +62,5 @@ else
   # Launch create-project.sh
   echo "Creating project $PROJECT_NAME$SUFFIX.$DOMAIN..."
   echo
-  bash ./scripts/create-project.sh $PROJECT_NAME $OPTION
+  bash ./scripts/projects/create-project.sh $PROJECT_NAME $OPTION
 fi
