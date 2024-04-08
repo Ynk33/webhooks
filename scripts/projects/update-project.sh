@@ -46,5 +46,9 @@ echo Applying dump.sql...
 sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump.sql
 mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
 
+## Reverting changes
+echo Reverting temporary changes...
+git checkout -- .
+
 ## The end
 echo -e "\033[32mDeployment complete!\033[0m"
