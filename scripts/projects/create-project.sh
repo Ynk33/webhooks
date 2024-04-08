@@ -73,7 +73,7 @@ mysql -u $DB_USER -p$DB_PASSWORD -e "FLUSH PRIVILEGES"
 # Apply dump_full.sql on db
 echo Applying dump_full.sql...
 echo "use $DB_FULL_NAME; source $PROJECT_PATH/dump_full.sql"
-mysql -u $DB_USER -p$DB_PASSWORD -e "use $DB_FULL_NAME; source $PROJECT_PATH/dump_full.sql"
+mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql"
 
 # Update wp-config.php with new salts and all db information
 echo Create wp-config.php...
