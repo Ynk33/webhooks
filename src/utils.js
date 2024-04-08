@@ -1,14 +1,16 @@
+// Projects environments, based on the branch that has been pushed.
+const Environments = {
+  PROD: "prod",
+  PREPROD: "preprod",
+  NONE: undefined
+};
+
 /**
  * Set of functions to read some data from the Github webhook payload.
  */
 module.exports = {
 
-  // Projects environments, based on the branch that has been pushed.
-  Environments: env = {
-    PROD: "prod",
-    PREPROD: "preprod",
-    NONE: undefined
-  },
+  Environments: Environments,
 
   // Returns the json contained in the request's body.
   fetchData: function fetchData(req) {
@@ -22,13 +24,13 @@ module.exports = {
     const mainBranch = "main";
 
     if (data.ref.includes(mainBranch)) {
-      return this.Environments.PROD;
+      return Environments.PROD;
     }
     else if (data.ref.includes(developBranch)) {
-      return this.Environments.PREPROD;
+      return Environments.PREPROD;
     }
     else {
-      return this.Environments.NONE;
+      return Environments.NONE;
     }
   },
 
