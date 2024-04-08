@@ -15,10 +15,14 @@ app.get("/", (req, res) => {
 });
 
 app.post("/webhooks", (req, res) => {
+  console.log("Connection on /webhooks, update attempt...");
+  console.log(req.body);
   updateWebhooks(req, res);
 });
 
 app.post("/", (req, res) => {
+  console.log("Connection on /, project attempt...");
+  console.log(req.body);
   updateProject(req, res);
 });
 
