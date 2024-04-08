@@ -15,6 +15,7 @@ module.exports = {
     }
     
     console.log("[Webhooks] Update");
+
     
 
     // Run the update script.
