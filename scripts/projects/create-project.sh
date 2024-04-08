@@ -87,7 +87,7 @@ printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s $PROJECT_PATH/wp-config.php
 
 # Reverting changes
 echo Reverting temporary changes...
-git checkout -- .
+# git checkout -- .
 
 # The end
 echo -e "\033[32mDeployment complete!\033[0m"
