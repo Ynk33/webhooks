@@ -32,6 +32,9 @@ PROJECT_PATH=$ROOT_PATH/$URL
 su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules"
 
 ## Truncate all tables
+DB_SUFFIX="${SUFFIX/-preprod/_preprod}"
+DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
+
 mysql -u $DB_USER -p$DB_PASSWORD -Nse 'show tables' $DB_FULL_NAME |
   while read table;
   do 
