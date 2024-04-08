@@ -10,7 +10,6 @@ module.exports = {
     let env = fetchEnv(data);
 
     // Do not process request if [IGNORE-WEBHOOKS] is present in the commit message
-    console.log("Last commit message: " + data.head_commit.message);
     if (isIgnoringWebhooks(data)) {
       console.log("Last commit includes [IGNORE-WEBHOOKS]. So ignore.");
       res.send("Ignored.")
