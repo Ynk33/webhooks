@@ -65,19 +65,16 @@ mysql -u $DB_USER -p$DB_PASSWORD -e "CREATE DATABASE $DB_FULL_NAME"
 
 # Give wpadmin priviledges on this db
 echo Updating privileges...
-echo "GRANT ALL ON $DB_FULL_NAME.* TO 'wpadmin'@'localhost' IDENTIFIED BY '$DB_WPADMIN_PASSWORD' WITH GRANT OPTION"
 mysql -u $DB_USER -p$DB_PASSWORD -e "GRANT ALL ON $DB_FULL_NAME.* TO 'wpadmin'@'localhost' IDENTIFIED BY '$DB_WPADMIN_PASSWORD' WITH GRANT OPTION"
-echo "FLUSH PRIVILEGES"
 mysql -u $DB_USER -p$DB_PASSWORD -e "FLUSH PRIVILEGES"
 
 # Apply dump_full.sql on db
 echo Applying dump_full.sql...
-echo "use $DB_FULL_NAME; source $PROJECT_PATH/dump_full.sql"
-mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql"
+mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
 
 # Update wp-config.php with new salts and all db information
 echo Create wp-config.php...
-cp $PROJECT_PATH/wp-config-sample.php $PROJECT_PATH/wp-config.php
+su - yanka -c "cp $PROJECT_PATH/wp-config-sample.php $PROJECT_PATH/wp-config.php"
 
 # DB config
 echo Update DB config in wp-config.php...

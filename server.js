@@ -21,7 +21,7 @@ app.post("/webhooks", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  console.log("Connection on /, project attempt...");
+  console.log("Connection on /, project update attempt...");
   handle(req, res, updateProject);
 });
 
