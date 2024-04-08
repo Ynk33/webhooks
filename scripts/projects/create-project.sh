@@ -59,15 +59,19 @@ certbot --nginx -d $URL -d www.$URL -n
 DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$SUFFIX"
 
 echo Creating new database $DB_FULL_NAME...
+echo "CREATE DATABASE $DB_FULL_NAME"
 mysql -u $DB_USER -p$DB_PASSWORD -e "CREATE DATABASE $DB_FULL_NAME"
 
 # Give wpadmin priviledges on this db
 echo Updating privileges...
+echo "GRANT ALL ON $DB_FULL_NAME.* TO 'wpadmin'@'localhost' IDENTIFIED BY '$DB_WPADMIN_PASSWORD' WITH GRANT OPTION"
 mysql -u $DB_USER -p$DB_PASSWORD -e "GRANT ALL ON $DB_FULL_NAME.* TO 'wpadmin'@'localhost' IDENTIFIED BY '$DB_WPADMIN_PASSWORD' WITH GRANT OPTION"
+echo "FLUSH PRIVILEGES"
 mysql -u $DB_USER -p$DB_PASSWORD -e "FLUSH PRIVILEGES"
 
 # Apply dump_full.sql on db
 echo Applying dump_full.sql...
+echo "use $DB_FULL_NAME; source $PROJECT_PATH/dump_full.sql"
 mysql -u $DB_USER -p$DB_PASSWORD -e "use $DB_FULL_NAME; source $PROJECT_PATH/dump_full.sql"
 
 # Update wp-config.php with new salts and all db information
