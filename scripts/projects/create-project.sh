@@ -69,6 +69,11 @@ echo Applying dump_full.sql...
 sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump_full.sql
 mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
 
+# Updates options in the database
+echo Updating URL in TABLE wp_options...
+mysql -u $DB_USER -p$DB_PASSWORD -e "UPDATE $DB_FULL_NAME.wp_options SET option_value = 'https://$URL' WHERE option_name = 'siteurl"
+mysql -u $DB_USER -p$DB_PASSWORD -e "UPDATE $DB_FULL_NAME.wp_options SET option_value = 'https://$URL' WHERE option_name = 'home"
+
 # Update wp-config.php with new salts and all db information
 echo Create wp-config.php...
 su - yanka -c "cp $PROJECT_PATH/wp-config-sample.php $PROJECT_PATH/wp-config.php"
