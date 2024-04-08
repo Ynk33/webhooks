@@ -15,6 +15,6 @@ echo Building project...
 su - yanka -c "cd $PATH && npm run build"
 
 echo Restart daemon...
-# pm2 restart webhooks
+ pm2 restart webhooks
 
 echo -e "\033[32mDone!\033[0m Webhooks updated and running."
