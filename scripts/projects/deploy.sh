@@ -15,8 +15,8 @@ Help() {
 }
 
 # Variables
+source .env
 PROJECT_NAME=$1
-DOMAIN="yankadevlab.tech"
 SUFFIX=""
 OPTION=""
 
@@ -54,7 +54,7 @@ do
 done
 
 # Check if it is the first deploy or an update
-if [ -d "/var/www/$PROJECT_NAME$SUFFIX.$DOMAIN" ]; then
+if [ -d "$ROOT_PATH/$PROJECT_NAME$SUFFIX.$DOMAIN" ]; then
   # Launch update-project.sh
   echo "Updating project $PROJECT_NAME$SUFFIX.$DOMAIN..."
   echo
