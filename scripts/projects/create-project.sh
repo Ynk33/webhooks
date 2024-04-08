@@ -56,7 +56,7 @@ echo Certifying HTTPS with Certbot...
 certbot --nginx -d $URL -d www.$URL -n
 
 # Create new db
-DB_SUFFIX="${$SUFFIX/-preprod/_preprod}"
+DB_SUFFIX="${SUFFIX/-preprod/_preprod}"
 DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
 
 echo Creating new database $DB_FULL_NAME...
