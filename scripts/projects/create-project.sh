@@ -33,10 +33,6 @@ REPO_URL=$GITHUB/$PROJECT_NAME
 echo Cloning $REPO_URL at $PROJECT_PATH...
 su - yanka -c "git clone $REPO_URL $PROJECT_PATH"
 
-echo Updating rights...
-chown -R yanka:yanka $PROJECT_PATH
-chmod -R 755 $PROJECT_PATH
-
 # Create server block
 echo Creating Nginx server block at $CONFIG_PATH$URL...
 cp $CONFIG_PATH"template" $CONFIG_PATH$URL
@@ -70,6 +66,7 @@ mysql -u $DB_USER -p$DB_PASSWORD -e "FLUSH PRIVILEGES"
 
 # Apply dump_full.sql on db
 echo Applying dump_full.sql...
+sed -i "s|[^\s/.\\]wordpress[^\s/.\\]|\`$DB_FULL_NAME\`|g" dump_full.sql
 mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
 
 # Update wp-config.php with new salts and all db information
@@ -87,6 +84,10 @@ echo Update salts in wp-config.php...
 SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
 STRING='put your unique phrase here'
 printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s $PROJECT_PATH/wp-config.php
+
+# Reverting changes
+echo Reverting temporary changes...
+git checkout -- .
 
 # The end
 echo -e "\033[32mDeployment complete!\033[0m"
