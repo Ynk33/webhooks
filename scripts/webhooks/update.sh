@@ -1,16 +1,19 @@
 #!/bin/sh
 #!/bin/bash
 
+su yanka
 cd /var/www/webhooks
 
+echo Connected as $(whoami) at $(pwd)
+
 echo Pulling updates...
-su - yanka -c "git pull"
+git pull
 
 echo Installing dependencies...
-su - yanka -c "npm install"
+npm install
 
 echo Building project...
-su - yanka -c "npm run build"
+npm run build
 
 echo Restart daemon...
 # pm2 restart webhooks
