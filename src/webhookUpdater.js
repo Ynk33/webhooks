@@ -12,6 +12,7 @@ module.exports = {
     if (env !== Environments.PROD) {
       return
     }
+    
 
     console.log("[Webhooks] Update");
 
