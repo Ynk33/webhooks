@@ -5,6 +5,7 @@ module.exports = {
 
     // Parse th request body.
     let data = fetchData(req);
+    console.log(data);
 
     // Find out which branch has been pushed.
     let env = fetchEnv(data);
@@ -13,7 +14,6 @@ module.exports = {
       return
     }
     
-
     console.log("[Webhooks] Update");
 
     // Run the update script.
