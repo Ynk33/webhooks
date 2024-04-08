@@ -14,12 +14,12 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
-app.post("/", (req, res) => {
-  updateProject(req, res);
-});
-
 app.post("/webhooks", (req, res) => {
   updateWebhooks(req, res);
+});
+
+app.post("/", (req, res) => {
+  updateProject(req, res);
 });
 
 app.listen(port, () => {
