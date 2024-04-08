@@ -38,7 +38,7 @@ DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
 mysql -u $DB_USER -p$DB_PASSWORD -Nse 'show tables' $DB_FULL_NAME |
   while read table;
   do 
-    mysql -h $IP_ADDRESS -u $DB_USER -p$DB_PASSWORD -e "TRUNCATE TABLE $table" $DB_FULL_NAME;
+    mysql -u $DB_USER -p$DB_PASSWORD -e "TRUNCATE TABLE $table" $DB_FULL_NAME;
   done
 
 ## Apply dump.sql
