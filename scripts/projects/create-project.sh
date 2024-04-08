@@ -33,6 +33,9 @@ REPO_URL=$GITHUB/$PROJECT_NAME
 echo Cloning $REPO_URL at $PROJECT_PATH...
 su - yanka -c "git clone $REPO_URL $PROJECT_PATH"
 
+# Wait until the clone is complete
+sleep 20
+
 # Create server block
 echo Creating Nginx server block at $CONFIG_PATH$URL...
 cp $CONFIG_PATH"template" $CONFIG_PATH$URL
@@ -66,7 +69,6 @@ mysql -u $DB_USER -p$DB_PASSWORD -e "FLUSH PRIVILEGES"
 
 # Apply dump_full.sql on db
 echo Applying dump_full.sql...
-sed -i "s|[^\s/.\\]wordpress[^\s/.\\]|\`$DB_FULL_NAME\`|g" dump_full.sql
 mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
 
 # Update wp-config.php with new salts and all db information
