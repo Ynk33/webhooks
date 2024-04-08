@@ -7,6 +7,7 @@
 # $1: Project name
 PROJECT_NAME=$1
 SUFFIX=""
+BRANCH="main"
 
 ## Options
 shift
@@ -15,6 +16,7 @@ do
   case $i in
     --preprod)
       SUFFIX="-preprod"
+      BRANCH="develop"
       ;;
     *)
       echo "Error: Invalid option $i"
@@ -31,7 +33,7 @@ REPO_URL=$GITHUB/$PROJECT_NAME
 
 # Git clone project
 echo Cloning $REPO_URL at $PROJECT_PATH...
-su - yanka -c "git clone --recursive $REPO_URL $PROJECT_PATH"
+su - yanka -c "git clone --branch $BRANCH --recurse-submodules $REPO_URL $PROJECT_PATH"
 
 # Create server block
 echo Creating Nginx server block at $CONFIG_PATH$URL...
