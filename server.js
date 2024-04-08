@@ -27,5 +27,4 @@ app.post("/", (req, res) => {
 
 app.listen(port, () => {
   console.log(`Webhooks app listening on port ${port}`);
-  console.log("This is a test");
 });
