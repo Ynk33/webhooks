@@ -1,15 +1,11 @@
 const { exec } = require('child_process');
-const { fetchData, fetchEnv, fetchProject, Environments } = require('./utils');
+const { fetchProject, Environments } = require('./utils');
 
 module.exports = {
-  updateProject: function update(req, res) {
+  // Update the project defined in the push payload, in preprod or prod based on the branch that has been pushed.
+  updateProject: function update(data, env, res) {
     
-    // Parse the request's body.
-    let data = fetchData(req);
-
-    // Find out branch has been pushed.
-    let env = fetchEnv(data);
-    // --- If it is not main or develop, ignore and do nothing.
+    // If push not main or develop branch, ignore and do nothing.
     if (env === Environments.NONE) {
       return;
     }

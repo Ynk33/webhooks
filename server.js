@@ -4,6 +4,7 @@ const { updateProject } = require("./src/projectUpdater");
 
 const app = express();
 const bodyParser = require("body-parser");
+const { handle } = require("./src/requestHandler");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,14 +17,12 @@ app.get("/", (req, res) => {
 
 app.post("/webhooks", (req, res) => {
   console.log("Connection on /webhooks, update attempt...");
-  console.log(req.body);
-  updateWebhooks(req, res);
+  handle(req, res, updateWebhooks);
 });
 
 app.post("/", (req, res) => {
   console.log("Connection on /, project attempt...");
-  console.log(req.body);
-  updateProject(req, res);
+  handle(req, res, updateProject);
 });
 
 app.listen(port, () => {

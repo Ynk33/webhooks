@@ -1,24 +1,18 @@
-const { fetchData, fetchEnv, Environments } = require("./utils");
+const { exec } = require('child_process');
+const { Environments } = require("./utils");
 
 module.exports = {
-  updateWebhooks: function update(req, res) {
+  // Update this Webhooks project and rebuild it with npm.
+  updateWebhooks: function update(data, env, res) {
 
-    // Parse th request body.
-    let data = fetchData(req);
-    console.log(data);
-
-    // Find out which branch has been pushed.
-    let env = fetchEnv(data);
-    // --- If it is not on main branch, do nothing.
+    // If push not on main branch, do nothing.
     if (env !== Environments.PROD) {
       return
     }
     
+    // Run the update script.
     console.log("[Webhooks] Update");
 
-    
-
-    // Run the update script.
     exec('bash ./scripts/webhooks/update.sh', (error, stdout, stderr) => {
       console.log(stdout);
       console.log(stderr);
