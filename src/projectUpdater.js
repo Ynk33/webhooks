@@ -1,5 +1,5 @@
 const { exec } = require('child_process');
-const { fetchProject, Environments } = require('./utils');
+const { fetchProject, Environments, dbNeedsUpdate } = require('./utils');
 
 module.exports = {
   // Update the project defined in the push payload, in preprod or prod based on the branch that has been pushed.
@@ -16,7 +16,10 @@ module.exports = {
     // Launch the deploy script with the appropriate parameters.
     console.log('[' + project + '] deploy-' + env);
 
-    exec('bash ./scripts/projects/deploy.sh ' + project.toLowerCase() + (env === Environments.PREPROD ? ' --preprod' : ''), (error, stdout, stderr) => {
+    const preprodOption = env === Environments.PREPROD ? ' --preprod' : '';
+    const dbOption = dbNeedsUpdate(data) ? ' --db' : '';
+
+    exec('bash ./scripts/projects/deploy.sh ' + project.toLowerCase() + preprodOption + dbOption, (error, stdout, stderr) => {
       console.log(stdout);
       console.log(stderr);
       if (error !== null) {

@@ -42,5 +42,10 @@ module.exports = {
   // Assess if the last commit required to ignore webhooks.
   isIgnoringWebhooks: function isIgnoringWebHooks(data) {
     return data.head_commit.message.includes("[IGNORE-WEBHOOKS]");
+  },
+
+  // Asses if the db needs to be updated.
+  dbNeedsUpdate: function dbNeedsUpdate(data) {
+    return data.head_commit.message.includes("[DB]");
   }
 }

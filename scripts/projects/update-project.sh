@@ -7,6 +7,7 @@
 # $1: Project name
 PROJECT_NAME=$1
 SUFFIX=""
+UPDATE_DB=false
 
 ## Options
 shift
@@ -15,6 +16,9 @@ do
   case $i in
     --preprod)
       SUFFIX="-preprod"
+      ;;
+    --db)
+      UPDATE_DB=true
       ;;
     *)
       echo "Error: Invalid option $i"
@@ -41,10 +45,30 @@ mysql -u $DB_USER -p$DB_PASSWORD -Nse 'show tables' $DB_FULL_NAME |
     mysql -u $DB_USER -p$DB_PASSWORD -e "TRUNCATE TABLE $table" $DB_FULL_NAME;
   done
 
-## Apply dump.sql
-echo Applying dump.sql...
-sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump.sql
-mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
+# TODO: don't do this. In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, do this.
+if [ $UPDATE_DB ]
+then
+  if [ -z $SUFFIX ]
+  then
+    ## Apply dump.sql
+    echo Applying dump.sql...
+    sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump.sql
+    mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
+  else
+    # Check if there is a preprod db
+    if [ -z mysql -u $DB_USER -p$DB_PASSWORD -e "SHOW DATATABLES;" | grep $DB_FULL_NAME"_preprod" ]
+    then
+      # No preprod
+      ## Apply dump.sql
+      echo Applying dump.sql...
+      sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump.sql
+      mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
+    else
+      ### Preprod exists: use a dump of the preprod db to fill the prod db
+      mysqldump -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME"_preprod" | mysql  -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME
+    fi
+  fi
+fi
 
 ## Reverting changes
 echo Reverting temporary changes...

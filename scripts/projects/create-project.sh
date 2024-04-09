@@ -66,6 +66,7 @@ echo Updating privileges...
 mysql -u $DB_USER -p$DB_PASSWORD -e "GRANT ALL ON $DB_FULL_NAME.* TO 'wpadmin'@'localhost' IDENTIFIED BY '$DB_WPADMIN_PASSWORD' WITH GRANT OPTION"
 mysql -u $DB_USER -p$DB_PASSWORD -e "FLUSH PRIVILEGES"
 
+# TODO: In case of prod, don't do this. If there is a preprod, use a dump of the preprod db. Otherwise, do this.
 ## Apply dump_full.sql on db
 echo Applying dump_full.sql...
 sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump_full.sql
