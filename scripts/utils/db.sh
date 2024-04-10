@@ -7,15 +7,23 @@ MYSQL_CONNECT="mysql -u $DB_USER -p$DB_PASSWORD"
 ### Running command from $VAR example
 # eval "${MYSQL_CONNECT} -e 'SHOW DATABASES;'"
 
-# Apply the dump of the project to the project db
-applyDump() {
+# Check if the db exists
+dbExist() {
+  # PARAMETERS
+  DB_NAME=$1
 
-  # Variables from parameters
+  # BODY
+  [ -z eval "${MYSQL_CONNECT} -e 'SHOW DATATABLES;' | grep $DB_FULL_NAME'_preprod'" ]
+}
+
+# Apply the dump of the project to its db
+applyDump() {
+  # PARAMETERS
   DB_NAME=$1
   PROJECT_PATH=$2
   FULL=
 
-  # Options
+  # OPTIONS
   for i in $@
   do
     case $i in
@@ -25,9 +33,17 @@ applyDump() {
     esac
   done
 
-  # Script
+  # VARIABLES
+  DUMP_FILE=$PROJECT_PATH/dump$FULL.sql
+  DUMP_TMP=$PROJECT_PATH/dump_temp.sql
 
-  echo Applying dump_full.sql...
-  sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_NAME\`/g" $PROJECT_PATH/dump$FULL.sql
-  eval "${MYSQL_CONNECT} $DB_NAME < $PROJECT_PATH/dump$FULL.sql"
+  # BODY
+  echo Applying dump$FULL.sql...
+  # Create a temporary dump file and update it with the proper db name
+  cp $DUMP_FILE $DUMP_TMP
+  sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_NAME\`/g" $DUMP_TMP
+  # Apply the dump
+  eval "${MYSQL_CONNECT} $DB_NAME < $DUMP_TMP"
+  # Delete the dump file
+  rm $DUMP_TMP
 }

@@ -28,6 +28,7 @@ done
 ## Setting variables
 source .env
 source ./scripts/utils.sh
+
 URL=$PROJECT_NAME$SUFFIX.$DOMAIN
 PROJECT_PATH=$ROOT_PATH/$URL
 REPO_URL=$GITHUB/$PROJECT_NAME
@@ -69,9 +70,7 @@ mysql -u $DB_USER -p$DB_PASSWORD -e "FLUSH PRIVILEGES"
 
 # TODO: In case of prod, don't do this. If there is a preprod, use a dump of the preprod db. Otherwise, do this.
 ## Apply dump_full.sql on db
-echo Applying dump_full.sql...
-sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump_full.sql
-mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
+applyDump $DB_FULL_NAME $PROJECT_PATH --full
 
 ## Updates options in the database
 echo Updating URL in TABLE wp_options...

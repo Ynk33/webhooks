@@ -29,6 +29,8 @@ done
 
 ## Setting variables
 source .env
+source ./scripts/utils.sh
+
 URL=$PROJECT_NAME$SUFFIX.$DOMAIN
 PROJECT_PATH=$ROOT_PATH/$URL
 
@@ -51,18 +53,14 @@ then
   if [ -z $SUFFIX ]
   then
     ## Apply dump.sql
-    echo Applying dump.sql...
-    sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump.sql
-    mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
+    applyDump $DB_FULL_NAME $PROJECT_PATH
   else
     # Check if there is a preprod db
-    if [ -z mysql -u $DB_USER -p$DB_PASSWORD -e "SHOW DATATABLES;" | grep $DB_FULL_NAME"_preprod" ]
+    if [ dbExist $DB_FULL_NAME"_preprod" ]
     then
       # No preprod
       ## Apply dump.sql
-      echo Applying dump.sql...
-      sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_FULL_NAME\`/g" $PROJECT_PATH/dump.sql
-      mysql -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME < $PROJECT_PATH/dump_full.sql
+      applyDump $DB_FULL_NAME $PROJECT_PATH
     else
       ### Preprod exists: use a dump of the preprod db to fill the prod db
       mysqldump -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME"_preprod" | mysql  -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME
