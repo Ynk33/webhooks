@@ -40,7 +40,7 @@ DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
 ## Git pull changes
 su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules"
 
-# TODO: don't do this. In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, do this.
+# In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, use the dump in the project.
 if [ ! -z $UPDATE_DB ]
 then
   ## Truncate all tables
@@ -61,7 +61,7 @@ then
       applyDump $DB_FULL_NAME $PROJECT_PATH
     else
       ### Preprod exists: use a dump of the preprod db to fill the prod db
-      mysqldump -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME"_preprod" | mysql  -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME
+      applyDumpFromPreprod $DB_FULL_NAME
     fi
   fi
   

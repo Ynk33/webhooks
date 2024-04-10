@@ -64,9 +64,25 @@ createDb $DB_FULL_NAME
 ## Give wpadmin priviledges on this db
 grantPrivileges $DB_FULL_NAME
 
-# TODO: In case of prod, don't do this. If there is a preprod, use a dump of the preprod db. Otherwise, do this.
-## Apply dump_full.sql on db
-applyDump $DB_FULL_NAME $PROJECT_PATH --full
+# In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, use the dump in the project.
+if [ ! -z $SUFFIX ]
+then
+  ## Apply dump.sql
+  applyDump $DB_FULL_NAME $PROJECT_PATH --full
+else
+  # Check if there is a preprod db
+  echo "Checking if ${DB_FULL_NAME}_preprod exists..."
+  DB_EXIST=$(dbExists $DB_FULL_NAME"_preprod")
+  if [ -z "${DB_EXIST}" ]
+  then
+    # No preprod
+    ## Apply dump.sql
+    applyDump $DB_FULL_NAME $PROJECT_PATH --full
+  else
+    ### Preprod exists: use a dump of the preprod db to fill the prod db
+    applyDumpFromPreprod $DB_FULL_NAME
+  fi
+fi
 
 ## Updates options in the database
 updateWpOptions $DB_FULL_NAME $URL

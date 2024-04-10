@@ -5,6 +5,7 @@ source .env
 
 # SAVED COMMANDS
 MYSQL_CONNECT="mysql -u $DB_USER -p$DB_PASSWORD"
+MYSQL_DUMP="mysqldump -u $DB_USER -p$DB_PASSWORD"
 
 # Check if the db exists
 dbExists() {
@@ -76,6 +77,20 @@ applyDump() {
   $($MYSQL_CONNECT $DB_NAME < $DUMP_TMP)
   # Delete the dump file
   rm $DUMP_TMP
+}
+
+# Make a dump of the preprod db to fill the prod db
+applyDumpFromPreprod() {
+  # PARAMETERS
+  DB_NAME=$1
+
+  if [[ $DB_NAME == *"preprod"* ]]; then
+    echo -e "\033[31mYou can't use applyDumpFromPreprod() on a preprod project!\033[0m"
+    return 0
+  fi
+
+  # BODY
+  echo $($MYSQL_DUMP $DB_NAME"_preprod" | $MYSQL_CONNECT $DB_NAME)
 }
 
 # Update wp_options table with the proper url
