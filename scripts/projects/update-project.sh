@@ -40,12 +40,12 @@ DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
 ## Git pull changes
 su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules"
 
-## Truncate all tables
-truncateAllTables $DB_FULL_NAME
-
 # TODO: don't do this. In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, do this.
 if [ ! -z $UPDATE_DB ]
 then
+  ## Truncate all tables
+  truncateAllTables $DB_FULL_NAME
+
   if [ ! -z $SUFFIX ]
   then
     ## Apply dump.sql
