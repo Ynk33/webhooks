@@ -41,7 +41,6 @@ DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
 su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules"
 
 ## Truncate all tables
-
 truncateAllTables $DB_FULL_NAME
 
 # TODO: don't do this. In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, do this.
@@ -53,6 +52,7 @@ then
     applyDump $DB_FULL_NAME $PROJECT_PATH
   else
     # Check if there is a preprod db
+    echo "Checking if ${DB_FULL_NAME}_preprod exists..."
     DB_EXIST=$(dbExists $DB_FULL_NAME"_preprod")
     if [ -z "${DB_EXIST}" ]
     then
@@ -67,7 +67,7 @@ then
 fi
 
 ## Reverting changes
-echo Reverting temporary changes...
+echo Cleaning up...
 su - yanka -c "cd $PROJECT_PATH && git checkout -- ."
 
 ## The end

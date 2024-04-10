@@ -2,10 +2,9 @@
 #!/bin/bash
 
 source .env
-MYSQL_CONNECT="mysql -u $DB_USER -p$DB_PASSWORD"
 
-### Running command from $VAR example
-# eval "${MYSQL_CONNECT} -e 'SHOW DATABASES;'"
+# SAVED COMMANDS
+MYSQL_CONNECT="mysql -u $DB_USER -p$DB_PASSWORD"
 
 # Check if the db exists
 dbExists() {
@@ -23,6 +22,28 @@ dbExists() {
   else
     echo "found"
   fi
+}
+
+# Create a new db
+createDb() {
+  # PARAMETERS
+  DB_NAME=$1
+
+  # BODY
+  echo Creating new database $DB_FULL_NAME...
+  echo "CREATE DATABASE $DB_NAME"
+  eval "${MYSQL_CONNECT} -e 'CREATE DATABASE $DB_NAME;'"
+}
+
+# Grant all privileges on the db to wpadmin
+grantPrivileges() {
+  # PARAMETERS
+  DB_NAME=$1
+
+  # BODY
+  echo Updating privileges...
+  eval "${MYSQL_CONNECT} -e 'GRANT ALL ON $DB_FULL_NAME.* TO \'wpadmin\'@\'localhost\' IDENTIFIED BY \'$DB_WPADMIN_PASSWORD\' WITH GRANT OPTION;'"
+  eval "${MYSQL_CONNECT} -e 'FLUSH PRIVILEGES;'"
 }
 
 # Apply the dump of the project to its db
@@ -57,12 +78,25 @@ applyDump() {
   rm $DUMP_TMP
 }
 
+# Update wp_options table with the proper url
+updateWpOptions() {
+  # PARAMETERS
+  DB_NAME=$1
+  URL=$2
+
+  # BODY
+  echo Updating URL in TABLE wp_options...
+  eval "${MYSQL_CONNECT} -e 'UPDATE $DB_NAME.wp_options SET option_value = \'https://$URL\' WHERE option_name = \'siteurl\';'"
+  eval "${MYSQL_CONNECT} -e 'UPDATE $DB_NAME.wp_options SET option_value = \'https://$URL\' WHERE option_name = \'home\';'"
+}
+
 # Truncate all table from a db
 truncateAllTables() {
   # PARAMETERS
   DB_NAME=$1
 
   # BODY
+  echo Truncate all tables in $DB_NAME...
   eval "${MYSQL_CONNECT} -Nse 'show tables' $DB_NAME" |
     while read table;
     do 
