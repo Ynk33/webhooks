@@ -90,6 +90,7 @@ applyDumpFromPreprod() {
   fi
 
   # BODY
+  echo Copying preprod database to the prod database...
   echo $($MYSQL_DUMP $DB_NAME"_preprod" | $MYSQL_CONNECT $DB_NAME)
 }
 
