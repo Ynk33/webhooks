@@ -27,7 +27,7 @@ done
 
 ## Setting variables
 source .env
-source ./scripts/utils.sh
+source ./scripts/utils/db.sh
 
 URL=$PROJECT_NAME$SUFFIX.$DOMAIN
 PROJECT_PATH=$ROOT_PATH/$URL
