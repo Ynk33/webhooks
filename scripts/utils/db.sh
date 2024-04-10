@@ -13,11 +13,12 @@ dbExists() {
   DB_NAME=$1
 
   # BODY
-  if [ -z eval "${MYSQL_CONNECT} -e 'SHOW DATATABLES;' | grep ${DB_FULL_NAME}'_preprod'" ]
+  EVAL=eval "${MYSQL_CONNECT} -e 'SHOW DATATABLES;' | grep ${DB_FULL_NAME}'_preprod'"
+  if [ -z $EVAL ]
   then
-    return true
+    return 1
   else
-    return false
+    return 0
   fi
 }
 
