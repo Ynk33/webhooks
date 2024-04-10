@@ -56,7 +56,7 @@ then
     applyDump $DB_FULL_NAME $PROJECT_PATH
   else
     # Check if there is a preprod db
-    if [ dbExist $DB_FULL_NAME"_preprod" ]
+    if [ dbExists $DB_FULL_NAME"_preprod" ]
     then
       # No preprod
       ## Apply dump.sql

@@ -8,12 +8,17 @@ MYSQL_CONNECT="mysql -u $DB_USER -p$DB_PASSWORD"
 # eval "${MYSQL_CONNECT} -e 'SHOW DATABASES;'"
 
 # Check if the db exists
-dbExist() {
+dbExists() {
   # PARAMETERS
   DB_NAME=$1
 
   # BODY
-  [ -z eval "${MYSQL_CONNECT} -e 'SHOW DATATABLES;' | grep $DB_FULL_NAME'_preprod'" ]
+  if [ -z eval "${MYSQL_CONNECT} -e 'SHOW DATATABLES;' | grep ${DB_FULL_NAME}'_preprod'" ]
+  then
+    return true
+  else
+    return false
+  fi
 }
 
 # Apply the dump of the project to its db
