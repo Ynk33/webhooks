@@ -27,6 +27,7 @@ done
 
 ## Setting variables
 source .env
+source ./scripts/utils.sh
 URL=$PROJECT_NAME$SUFFIX.$DOMAIN
 PROJECT_PATH=$ROOT_PATH/$URL
 REPO_URL=$GITHUB/$PROJECT_NAME
