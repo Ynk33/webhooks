@@ -57,11 +57,15 @@ applyDump() {
   rm $DUMP_TMP
 }
 
-VAL=$(dbExists wordpress_yankawordpress_preprod)
-echo $VAL
-if [ -z "${VAL}" ]
-then
-  echo -e "\033[31mFail...\033[0m"
-else
-  echo -e "\033[32mSuccess!\033[0m"
-fi
+# Truncate all table from a db
+truncateAllTables() {
+  # PARAMETERS
+  DB_NAME=$1
+
+  # BODY
+  eval "${MYSQL_CONNECT} -Nse 'show tables' $DB_NAME" |
+    while read table;
+    do 
+      eval "${MYSQL_CONNECT} -e 'TRUNCATE TABLE $table' $DB_NAME;"
+    done
+}

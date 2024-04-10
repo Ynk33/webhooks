@@ -34,18 +34,15 @@ source ./scripts/utils.sh
 URL=$PROJECT_NAME$SUFFIX.$DOMAIN
 PROJECT_PATH=$ROOT_PATH/$URL
 
+DB_SUFFIX="${SUFFIX/-preprod/_preprod}"
+DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
+
 ## Git pull changes
 su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules"
 
 ## Truncate all tables
-DB_SUFFIX="${SUFFIX/-preprod/_preprod}"
-DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
 
-mysql -u $DB_USER -p$DB_PASSWORD -Nse 'show tables' $DB_FULL_NAME |
-  while read table;
-  do 
-    mysql -u $DB_USER -p$DB_PASSWORD -e "TRUNCATE TABLE $table" $DB_FULL_NAME;
-  done
+truncateAllTables $DB_FULL_NAME
 
 # TODO: don't do this. In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, do this.
 if [ $UPDATE_DB ]
@@ -56,7 +53,8 @@ then
     applyDump $DB_FULL_NAME $PROJECT_PATH
   else
     # Check if there is a preprod db
-    if [ dbExists $DB_FULL_NAME"_preprod" ]
+    DB_EXIST=$(dbExists $DB_FULL_NAME"_preprod")
+    if [ -z "${DB_EXIST}" ]
     then
       # No preprod
       ## Apply dump.sql
