@@ -15,7 +15,7 @@ module.exports = {
 
     exec('bash ./scripts/webhooks/update.sh', (error, stdout, stderr) => {
       console.log(stdout);
-      console.log(stderr);
+      console.error(stderr);
       if (error !== null) {
         console.log('exec error: ' + error)
       }
