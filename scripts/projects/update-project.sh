@@ -64,6 +64,9 @@ then
       mysqldump -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME"_preprod" | mysql  -u $DB_USER -p$DB_PASSWORD $DB_FULL_NAME
     fi
   fi
+  
+  ## Updates options in the database
+  updateWpOptions $DB_FULL_NAME $URL
 fi
 
 ## Reverting changes
