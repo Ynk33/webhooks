@@ -7,7 +7,7 @@
 # $1: Project name
 PROJECT_NAME=$1
 SUFFIX=""
-UPDATE_DB=false
+UPDATE_DB=""
 
 ## Options
 shift
@@ -18,7 +18,7 @@ do
       SUFFIX="-preprod"
       ;;
     --db)
-      UPDATE_DB=true
+      UPDATE_DB="true""
       ;;
     *)
       echo "Error: Invalid option $i"
@@ -44,7 +44,7 @@ su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules"
 truncateAllTables $DB_FULL_NAME
 
 # TODO: don't do this. In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, do this.
-if [ $UPDATE_DB ]
+if [ ! -z $UPDATE_DB ]
 then
   if [ ! -z $SUFFIX ]
   then
