@@ -12,14 +12,16 @@ dbExists() {
   # PARAMETERS
   DB_NAME=$1
 
-  # BODY
+  # VARIABLES
   DATABASES=$(eval "${MYSQL_CONNECT} -e 'SHOW DATABASES;'")
-
-  if echo $DATABASES | grep -q "$DB_FULL_NAME'_preprod'"
+  EVAL=$(echo $DATABASES | grep "$DB_NAME")
+  
+  # BODY
+  if [ -z "${EVAL}" ];
   then
-    return 1
+    echo ""
   else
-    return 0
+    echo "found"
   fi
 }
 
@@ -54,3 +56,12 @@ applyDump() {
   # Delete the dump file
   rm $DUMP_TMP
 }
+
+VAL=$(dbExists wordpress_yankawordpress_preprod)
+echo $VAL
+if [ -z "${VAL}" ]
+then
+  echo -e "\033[31mFail...\033[0m"
+else
+  echo -e "\033[32mSuccess!\033[0m"
+fi
