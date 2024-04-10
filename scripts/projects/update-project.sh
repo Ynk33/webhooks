@@ -18,7 +18,7 @@ do
       SUFFIX="-preprod"
       ;;
     --db)
-      UPDATE_DB="true""
+      UPDATE_DB="true"
       ;;
     *)
       echo "Error: Invalid option $i"
