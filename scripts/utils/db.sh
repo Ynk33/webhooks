@@ -32,7 +32,7 @@ createDb() {
   # BODY
   echo Creating new database $DB_FULL_NAME...
   echo "CREATE DATABASE $DB_NAME"
-  eval $MYSQL_CONNECT -e 'CREATE DATABASE $DB_NAME;'
+  eval $MYSQL_CONNECT -e "CREATE DATABASE $DB_NAME;"
 }
 
 # Grant all privileges on the db to wpadmin
@@ -43,7 +43,7 @@ grantPrivileges() {
   # BODY
   echo Updating privileges...
   eval $MYSQL_CONNECT -e "GRANT ALL ON $DB_FULL_NAME.* TO 'wpadmin'@'localhost' IDENTIFIED BY '$DB_WPADMIN_PASSWORD' WITH GRANT OPTION;"
-  eval $MYSQL_CONNECT -e 'FLUSH PRIVILEGES;'
+  eval $MYSQL_CONNECT -e "FLUSH PRIVILEGES;"
 }
 
 # Apply the dump of the project to its db
@@ -99,7 +99,7 @@ truncateAllTables() {
   echo Truncate all tables in $DB_NAME...
   eval "$MYSQL_CONNECT -Nse 'show tables' $DB_NAME" |
     while read table;
-    do 
+    do
       eval "${MYSQL_CONNECT} -e 'TRUNCATE TABLE $table' $DB_NAME;"
     done
 }
