@@ -46,7 +46,7 @@ truncateAllTables $DB_FULL_NAME
 # TODO: don't do this. In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, do this.
 if [ $UPDATE_DB ]
 then
-  if [ -z $SUFFIX ]
+  if [ ! -z $SUFFIX ]
   then
     ## Apply dump.sql
     applyDump $DB_FULL_NAME $PROJECT_PATH
