@@ -12,7 +12,7 @@ dbExists() {
   DB_NAME=$1
 
   # VARIABLES
-  DATABASES=$(eval $MYSQL_CONNECT -e 'SHOW DATABASES;')
+  DATABASES=$($MYSQL_CONNECT -e "SHOW DATABASES;")
   EVAL=$(echo $DATABASES | grep "$DB_NAME")
   
   # BODY
@@ -32,7 +32,7 @@ createDb() {
   # BODY
   echo Creating new database $DB_FULL_NAME...
   echo "CREATE DATABASE $DB_NAME"
-  eval $MYSQL_CONNECT -e "CREATE DATABASE $DB_NAME;"
+  $($MYSQL_CONNECT -e "CREATE DATABASE $DB_NAME;")
 }
 
 # Grant all privileges on the db to wpadmin
@@ -42,8 +42,8 @@ grantPrivileges() {
 
   # BODY
   echo Updating privileges...
-  eval $MYSQL_CONNECT -e "GRANT ALL ON $DB_FULL_NAME.* TO 'wpadmin'@'localhost' IDENTIFIED BY '$DB_WPADMIN_PASSWORD' WITH GRANT OPTION;"
-  eval $MYSQL_CONNECT -e "FLUSH PRIVILEGES;"
+  $($MYSQL_CONNECT -e "GRANT ALL ON $DB_FULL_NAME.* TO 'wpadmin'@'localhost' IDENTIFIED BY '$DB_WPADMIN_PASSWORD' WITH GRANT OPTION;")
+  $($MYSQL_CONNECT -e "FLUSH PRIVILEGES;")
 }
 
 # Apply the dump of the project to its db
@@ -73,7 +73,7 @@ applyDump() {
   cp $DUMP_FILE $DUMP_TMP
   sed -i "s/[^\s/.\\]wordpress[^\s/.\\]/\`$DB_NAME\`/g" $DUMP_TMP
   # Apply the dump
-  eval $MYSQL_CONNECT $DB_NAME < $DUMP_TMP
+  $($MYSQL_CONNECT $DB_NAME < $DUMP_TMP)
   # Delete the dump file
   rm $DUMP_TMP
 }
@@ -86,8 +86,8 @@ updateWpOptions() {
 
   # BODY
   echo Updating URL in TABLE wp_options...
-  eval $MYSQL_CONNECT -e "UPDATE $DB_NAME.wp_options SET option_value = 'https://$URL' WHERE option_name = 'siteurl';"
-  eval $MYSQL_CONNECT -e "UPDATE $DB_NAME.wp_options SET option_value = 'https://$URL' WHERE option_name = 'home';"
+  $($MYSQL_CONNECT -e "UPDATE $DB_NAME.wp_options SET option_value = 'https://$URL' WHERE option_name = 'siteurl';")
+  $($MYSQL_CONNECT -e "UPDATE $DB_NAME.wp_options SET option_value = 'https://$URL' WHERE option_name = 'home';")
 }
 
 # Truncate all table from a db
