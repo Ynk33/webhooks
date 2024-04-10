@@ -42,7 +42,7 @@ su - yanka -c "git clone --branch $BRANCH --recurse-submodules $REPO_URL $PROJEC
 
 ## Create server block
 echo Creating Nginx server block at $CONFIG_PATH$URL...
-cp $CONFIG_PATH"template" $CONFIG_PATH$URL
+cp $CONFIG_PATH"template$SUFFIX" $CONFIG_PATH$URL
 
 echo Updating server block...
 sed -i "s|__PATH__|$PROJECT_PATH|g" $CONFIG_PATH$URL
