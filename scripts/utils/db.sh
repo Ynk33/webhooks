@@ -14,9 +14,8 @@ dbExists() {
 
   # BODY
   DATABASES=$(eval "${MYSQL_CONNECT} -e 'SHOW DATABASES;'")
-  EVAL=$(${DATABASES} | grep ${DB_FULL_NAME}'_preprod')
-  
-  if [ -z $EVAL ]
+
+  if echo $DATABASES | grep -q "$DB_FULL_NAME'_preprod'"
   then
     return 1
   else
