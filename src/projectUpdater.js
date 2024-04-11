@@ -19,7 +19,7 @@ module.exports = {
     const preprodOption = env === Environments.PREPROD ? ' --preprod' : '';
     const dbOption = dbNeedsUpdate(data) ? ' --db' : '';
 
-    exec('bash ./scripts/projects/deploy.sh ' + project.toLowerCase() + preprodOption + dbOption, (error, stdout, stderr) => {
+    exec('bash ./scripts/projects/wordpress/deploy.sh ' + project.toLowerCase() + preprodOption + dbOption, (error, stdout, stderr) => {
       console.log(stdout);
       console.error(stderr);
       if (error !== null) {

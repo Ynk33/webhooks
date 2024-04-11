@@ -62,10 +62,10 @@ if [ -d "$ROOT_PATH/$PROJECT_NAME$SUFFIX.$DOMAIN" ]; then
   # Launch update-project.sh
   echo "Updating project $PROJECT_NAME$SUFFIX.$DOMAIN..."
   echo
-  bash ./scripts/projects/update-project.sh $PROJECT_NAME $OPTION_PREPROD $OPTION_DB
+  bash ./scripts/projects/wordpress/update-project.sh $PROJECT_NAME $OPTION_PREPROD $OPTION_DB
 else
   # Launch create-project.sh
   echo "Creating project $PROJECT_NAME$SUFFIX.$DOMAIN..."
   echo
-  bash ./scripts/projects/create-project.sh $PROJECT_NAME $OPTION_PREPROD
+  bash ./scripts/projects/wordpress/create-project.sh $PROJECT_NAME $OPTION_PREPROD
 fi
