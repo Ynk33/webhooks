@@ -51,6 +51,22 @@ sed -i "s|__URL__|$URL|g" $CONFIG_PATH$URL
 echo Creating symbolic link...
 ln -s $CONFIG_PATH$URL $LN_PATH
 
+# If preprod, configure .htpasswd
+if [ ! -z $SUFFIX ]
+then
+do
+  HTPASSWD_DIR=/etc/nginx/.passwd
+  PROJECT_HTPASSWD_DIR=$HTPASSWD_DIR/$PROJECT_NAME$SUFFIX
+
+  HTPASSWD=$HTPASSWD_DIR/.htpasswd
+  PROJECT_HTPASSWD=$PROJECT_HTPASSWD_DIR/.htpasswd
+
+  mkdir $PROJECT_HTPASSWD_DIR
+  cp $HTPASSWD $PROJECT_HTPASSWD_DIR
+  sed -i "s|$HTPASSWD|$PROJECT_HTPASSWD" $PROJECT_HTPASSWD
+fi
+
+# Reload Nginx
 echo Reloading Nginx...
 service nginx reload
 
