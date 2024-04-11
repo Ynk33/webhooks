@@ -1,19 +1,23 @@
-const express = require("express");
-const { updateWebhooks } = require("./src/webhookUpdater");
-const { updateProject } = require("./src/projectUpdater");
+import express from "express";
+import handle from "./src/requestHandler";
+import updateWebhooks from "./src/webhooks/webhookUpdater";
+import updateProject from "./src/project/projectUpdater";
+
+/**
+ * CONFIG
+ */
 
 const app = express();
 const bodyParser = require("body-parser");
-const { handle } = require("./src/requestHandler");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const port = 8008;
 
-app.get("/", (req, res) => {
-  res.send("Hello, world!");
-});
+/**
+ * ROUTES
+ */
 
 app.post("/webhooks", (req, res) => {
   console.log("Connection on /webhooks, update attempt...");

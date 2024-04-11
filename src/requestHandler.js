@@ -1,21 +1,25 @@
-const { fetchData, fetchEnv, isIgnoringWebhooks } = require("./utils");
+import GithubParser from "./utils/github/GithubParser";
+import GithubPayload from "./utils/github/GithubPayload";
 
-module.exports = {
-  // Parse some info from the request and let this provided processor process these info.
-  handle: function handle(req, res, processor) {
-    // Parse th request body.
-    let data = fetchData(req);
+/**
+ * Extract the Github payload from the request body and give it to the processor.
+ * @param {import("express").Request} req The request.
+ * @param {import("express").Response} res The response.
+ * @param {void} processor The function that will process the query. 
+ * @returns 
+ */
+export default function handle(req, res, processor) {
 
-    // Find out branch has been pushed.
-    let env = fetchEnv(data);
+  // Parse the request body.
+  const githubPayload = new GithubPayload((new GithubParser(req)).payload);
 
-    // Do not process request if [IGNORE-WEBHOOKS] is present in the commit message
-    if (isIgnoringWebhooks(data)) {
-      console.log("Last commit includes [IGNORE-WEBHOOKS]. So ignore.");
-      res.send("Ignored.")
-      return;
-    }
-
-    processor(data, env, res);
+  // Do not process request if [IGNORE-WEBHOOKS] is present in the commit message
+  if (githubPayload.isIgnoringWebHooks) {
+    console.log("Last commit includes [IGNORE-WEBHOOKS]. So ignore.");
+    res.send("Ignored.")
+    return;
   }
+
+  // Process
+  processor(githubPayload, res);
 }
