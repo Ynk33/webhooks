@@ -54,7 +54,6 @@ ln -s $CONFIG_PATH$URL $LN_PATH
 # If preprod, configure .htpasswd
 if [ ! -z $SUFFIX ]
 then
-do
   HTPASSWD_DIR=/etc/nginx/.passwd
   PROJECT_HTPASSWD_DIR=$HTPASSWD_DIR/$PROJECT_NAME$SUFFIX
 
