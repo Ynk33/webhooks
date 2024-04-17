@@ -9,6 +9,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js --watch",
+    "prebuild": "rimraf build",
     "build": "webpack",
     "prod": "node build/server.js"
   },
@@ -23,6 +24,7 @@
     "express": "^4.19.2"
   },
   "devDependencies": {
+    "rimraf": "^5.0.5",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
   }

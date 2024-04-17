@@ -9,4 +9,5 @@ module.exports = {
     filename: 'server.js',
   },
   target: 'node',
+  devtool: 'source-map',
 };

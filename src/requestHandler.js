@@ -1,5 +1,4 @@
 import GithubParser from "./utils/github/GithubParser";
-import GithubPayload from "./utils/github/GithubPayload";
 
 /**
  * Extract the Github payload from the request body and give it to the processor.
@@ -13,7 +12,7 @@ export default function handle(req, res, processor) {
   // Parse the request body.
   const githubPayload = (new GithubParser(req)).payload;
 
-  console.log(githubPayload);
+  console.log(githubPayload._payload);
 
   // Do not process request if [IGNORE-WEBHOOKS] is present in the commit message
   if (githubPayload.isIgnoringWebHooks) {
