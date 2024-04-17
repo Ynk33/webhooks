@@ -6,7 +6,7 @@ export default class GithubPayload {
    * @param {JSON} payload The Github payload in a JSON format.
    */
   constructor(payload) {
-    this.payload = payload;
+    this._payload = payload;
   }
 
   /**
@@ -14,7 +14,7 @@ export default class GithubPayload {
    * @returns {string} The name of the project.
    */
   get projectName() {
-    return this.payload.repository.name;
+    return this._payload.repository.name;
   }
   
   /**
@@ -25,7 +25,7 @@ export default class GithubPayload {
     const developBranch = "develop";
     const mainBranch = "main";
 
-    if (this.payload.ref.includes(mainBranch)) {
+    if (this._payload.ref.includes(mainBranch)) {
       return Environments.PROD;
     }
     else if (this.payload.ref.includes(developBranch)) {
