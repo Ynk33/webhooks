@@ -41,7 +41,7 @@ export default class GithubPayload {
    * @returns {boolean} Whether the webhooks must ignore this query or not.
    */
   get isIgnoringWebHooks() {
-    return this.payload.head_commit.message.includes("[IGNORE-WEBHOOKS]");
+    return this._payload.head_commit.message.includes("[IGNORE-WEBHOOKS]");
   }
 
   /**
@@ -49,6 +49,6 @@ export default class GithubPayload {
    * @returns {boolean} Whether the the database must be updated or not.
    */
   get dbNeedsUpdate() {
-    return this.payload.head_commit.message.includes("[DB]");
+    return this._payload.head_commit.message.includes("[DB]");
   }
 }
