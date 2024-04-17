@@ -11,7 +11,7 @@ import GithubPayload from "./utils/github/GithubPayload";
 export default function handle(req, res, processor) {
 
   // Parse the request body.
-  const githubPayload = new GithubPayload((new GithubParser(req)).payload);
+  const githubPayload = (new GithubParser(req)).payload;
 
   // Do not process request if [IGNORE-WEBHOOKS] is present in the commit message
   if (githubPayload.isIgnoringWebHooks) {
