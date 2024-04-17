@@ -25,10 +25,13 @@ do
   esac
 done
 
-## Setting variables
+## Sourcing
 source .env
 source ./scripts/utils/db.sh
+source ./scripts/utils/server-block.sh
+source ./scripts/utils/certbot.sh
 
+## Setting variables
 URL=$PROJECT_NAME$SUFFIX.$DOMAIN
 PROJECT_PATH=$ROOT_PATH/$URL
 REPO_URL=$GITHUB/$PROJECT_NAME
@@ -41,37 +44,14 @@ echo Cloning $REPO_URL at $PROJECT_PATH...
 su - yanka -c "git clone --branch $BRANCH --recurse-submodules $REPO_URL $PROJECT_PATH"
 
 ## Create server block
-echo Creating Nginx server block at $CONFIG_PATH$URL...
-cp $CONFIG_PATH"template$SUFFIX" $CONFIG_PATH$URL
-
-echo Updating server block...
-sed -i "s|__PATH__|$PROJECT_PATH|g" $CONFIG_PATH$URL
-sed -i "s|__URL__|$URL|g" $CONFIG_PATH$URL
-
-echo Creating symbolic link...
-ln -s $CONFIG_PATH$URL $LN_PATH
-
-# If preprod, configure .htpasswd
-if [ ! -z $SUFFIX ]
-then
-  HTPASSWD_DIR=/etc/nginx/.passwd
-  PROJECT_HTPASSWD_DIR=$HTPASSWD_DIR/$PROJECT_NAME$SUFFIX
-
-  HTPASSWD=$HTPASSWD_DIR/.htpasswd
-  PROJECT_HTPASSWD=$PROJECT_HTPASSWD_DIR/.htpasswd
-
-  mkdir $PROJECT_HTPASSWD_DIR
-  cp $HTPASSWD $PROJECT_HTPASSWD_DIR
-  sed -i "s|$HTPASSWD|$PROJECT_HTPASSWD|g" $CONFIG_PATH$URL
-fi
+configureServerBlock $PROJECT_NAME $PROJECT_PATH $URL $SUFFIX
 
 # Reload Nginx
 echo Reloading Nginx...
 service nginx reload
 
 ## Setup HTTPS with Certbot
-echo Certifying HTTPS with Certbot...
-certbot --nginx -d $URL -d www.$URL -n
+certifyHTTPS $URL
 
 ## Create new db
 createDb $DB_FULL_NAME
