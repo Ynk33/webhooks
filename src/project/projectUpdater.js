@@ -18,7 +18,7 @@ export default function updateProject(githubPayload, res) {
 
   const projectName = githubPayload.projectName;
 
-  if (projectName.includes(ProjectTypes.WORDPRESS)) {
+  if (projectName.toLowerCase().includes(ProjectTypes.WORDPRESS)) {
 
     // Deployment of Wordpress project
 
