@@ -11,4 +11,5 @@ module.exports = {
     filename: 'server.js',
   },
   target: 'node',
+  externals: ["child_process"]
 };
