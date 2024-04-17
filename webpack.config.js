@@ -1,7 +1,9 @@
 const path = require('path');
+const { optimize } = require('webpack');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
+  devtool: false,
   entry: './server.js',
   output: {
     path: path.join(__dirname, 'build'),
@@ -9,5 +11,4 @@ module.exports = {
     filename: 'server.js',
   },
   target: 'node',
-  devtool: 'source-map',
 };
