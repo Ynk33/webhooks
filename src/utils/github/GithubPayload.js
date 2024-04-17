@@ -28,7 +28,7 @@ export default class GithubPayload {
     if (this._payload.ref.includes(mainBranch)) {
       return Environments.PROD;
     }
-    else if (this.payload.ref.includes(developBranch)) {
+    else if (this._payload.ref.includes(developBranch)) {
       return Environments.PREPROD;
     }
     else {

@@ -12,8 +12,6 @@ export default function handle(req, res, processor) {
   // Parse the request body.
   const githubPayload = (new GithubParser(req)).payload;
 
-  console.log(githubPayload._payload);
-
   // Do not process request if [IGNORE-WEBHOOKS] is present in the commit message
   if (githubPayload.isIgnoringWebHooks) {
     console.log("Last commit includes [IGNORE-WEBHOOKS]. So ignore.");
