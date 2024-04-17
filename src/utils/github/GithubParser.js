@@ -9,13 +9,13 @@ export default class GithubParser {
    * @param {any} req The query.
    */
   constructor(req) {
-    this.payload = new GithubPayload(req.body);
+    this._payload = new GithubPayload(req.body);
   }
 
   /**
    * @returns {GithubPayload} The Github payload.
    */
   get payload() {
-    return this.payload;
+    return this._payload;
   }
 }
