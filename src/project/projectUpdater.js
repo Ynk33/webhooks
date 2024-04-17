@@ -1,4 +1,4 @@
-import exec from 'child_process';
+import { exec } from 'child_process';
 import Environments from '../utils/enums/environments';
 import GithubPayload from '../utils/github/GithubPayload';
 import ProjectTypes from '../utils/enums/projectTypes';
