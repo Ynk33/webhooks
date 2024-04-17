@@ -1,5 +1,5 @@
 const path = require('path');
-const { optimize } = require('webpack');
+const child_process = require('child_process');
 
 module.exports = {
   mode: 'development',
