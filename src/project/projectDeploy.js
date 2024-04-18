@@ -18,7 +18,7 @@ export default function deployProject(githubPayload, res) {
   }
 
   const projectName = githubPayload.projectName;
-  
+
   console.log('[' + projectName + '] deploy-' + githubPayload.env);
 
   if (projectName.toLowerCase().includes(ProjectTypes.WORDPRESS)) {
@@ -37,11 +37,11 @@ export default function deployProject(githubPayload, res) {
       }
     });
 
-  } else if (projectName.includes(ProjectTypes.NEXT)) {
+  } else if (projectName.toLowerCase().includes(ProjectTypes.NEXT)) {
 
     // Deployment of Next project
 
-    deployNext(projectName.toLowerCase, githubPayload.env, githubPayload.dbNeedsUpdate);
+    deployNext(projectName.toLowerCase(), githubPayload.env, githubPayload.dbNeedsUpdate);
   }
   else {
     return;
