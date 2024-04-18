@@ -37,6 +37,3 @@ app.post("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Webhooks app listening on port ${port}`);
 });
-
-const test = await runAndReturn("bash ./scripts/utils/net.sh");
-console.log("####### TEST #######", test);

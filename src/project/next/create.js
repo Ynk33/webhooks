@@ -2,6 +2,7 @@ import { simpleGit as git } from "simple-git";
 import fs from "fs";
 import Environments from "../../utils/enums/environments";
 import run, { runAndReturn } from "../../utils/bash/bash";
+import { searchAndReplace } from "../../utils/files/files";
 
 export async function create(projectName, env) {
   /**
@@ -31,9 +32,13 @@ export async function create(projectName, env) {
   // Update .env file
   console.log("Setting up .env file...");
   fs.copyFile(`${projectPath}/.env.sample`, `${projectPath}/.env`);
-  // TODO: Replace vars inside .env file (PORT, NEXT_PUBLIC_WORDPRESS_API_URL, NEXT_PUBLIC_ROOT_URL)
   // Find a free port
   const port = await runAndReturn("bash ./scripts/utils/net.sh");
+  // Update .env file
+  searchAndReplace("[PORT]", port, `${projectPath}/.env`);
+  searchAndReplace("[SET WORDPRESS API URL]", `https://${url}`.replace(/next/g, "wordpress"), `${projectPath}/.env`);
+  searchAndReplace("[SET WEBSITE URL]", `https://${url}`, `${projectPath}/.env`);
+  
 
   // npm install
   console.log("Installing dependencies...");
