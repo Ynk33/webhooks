@@ -6,9 +6,9 @@ isFree() {
   PORT=$1
 
   nc -z localhost $PORT
-  if [ $? -eq 0 ]
+  if [ "$?" -eq 1 ]
   then
-    return PORT
+    return $PORT
   else
     return 1
   fi
@@ -16,7 +16,7 @@ isFree() {
 
 PORT=8100
 isFree $PORT
-while [ "$?" -eq 1 ] || [ $PORT -gt 8110 ] 
+while [ "$?" -eq 1 ] && [ $PORT -lt 8200 ] 
 do
   PORT=$(($PORT + 1))
   isFree $PORT
