@@ -3,6 +3,7 @@ import handle from "./src/requestHandler";
 import updateWebhooks from "./src/webhooks/webhookUpdater";
 import updateProject from "./src/project/projectUpdater";
 import { deploy } from "./src/project/next/deploy";
+import { runAndReturn } from "./src/utils/bash/bash";
 
 /**
  * CONFIG
@@ -36,3 +37,6 @@ app.post("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Webhooks app listening on port ${port}`);
 });
+
+const test = runAndReturn("bash ./scripts/utils/net.sh");
+console.log("####### TEST #######", test);
