@@ -5,7 +5,6 @@ const execute = util.promisify(exec);
 
 export default async function run(command, logErrors = true) {
   command = command.replace(/(\r\n|\n|\r)/gm,"");
-  console.log(`#### bash.js - running command: ${command}`);
   const { stdout, stderr } = await execute(command);
   console.log(stdout);
   if (logErrors) {

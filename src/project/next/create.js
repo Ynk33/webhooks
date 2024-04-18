@@ -63,12 +63,13 @@ export async function create(projectName, env) {
 
   // Nginx configuration
   console.log("Updating Nginx configuration...");
-  console.log(`##### create.js: ${suffix}`);
   await run(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${port} ${suffix}`);
 
   // Run server with pm2
   console.log(`Start pm2 process ${projectName}${suffix}...`);
+  await run(`pm2 delete ${projectName}${suffix}`);
   await run(`pm2 start npm --name ${projectName}${suffix} --time -- start`);
+  await run(`pm2 save`);
 
   console.log();
   console.log("Deployment complete!");
