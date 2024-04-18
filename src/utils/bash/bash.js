@@ -1,6 +1,5 @@
 import util from "util";
 import { exec } from "child_process";
-import Colors, { colorize } from "./colors.js";
 
 const execute = util.promisify(exec); 
 
