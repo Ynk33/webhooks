@@ -9,3 +9,6 @@ build/
 
 # Env
 *.env
+
+# VSCode
+.vscode/

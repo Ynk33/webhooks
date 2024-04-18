@@ -2,6 +2,7 @@ import { exec } from 'child_process';
 import Environments from '../utils/enums/environments';
 import GithubPayload from '../utils/github/GithubPayload';
 import ProjectTypes from '../utils/enums/projectTypes';
+import { deploy } from "./next/deploy";
 
 /**
  * Update the project defined in the push payload, in preprod or prod based on the branch that has been pushed.
@@ -37,7 +38,7 @@ export default function updateProject(githubPayload, res) {
 
   } else if (projectName.includes(ProjectTypes.NEXT)) {
 
-    // TODO: Deployment of Next projects
+    deploy(projectName.toLowerCase, githubPayload.env);
   }
   else {
     return;
