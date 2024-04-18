@@ -18,6 +18,8 @@ export default function deployProject(githubPayload, res) {
   }
 
   const projectName = githubPayload.projectName;
+  
+  console.log('[' + projectName + '] deploy-' + githubPayload.env);
 
   if (projectName.toLowerCase().includes(ProjectTypes.WORDPRESS)) {
 
@@ -26,7 +28,6 @@ export default function deployProject(githubPayload, res) {
     const preprodOption = githubPayload.env === Environments.PREPROD ? ' --preprod' : '';
     const dbOption = githubPayload.dbNeedsUpdate ? ' --db' : '';
   
-    console.log('[' + projectName + '] deploy-' + githubPayload.env);
     exec('bash ./scripts/projects/wordpress/deploy.sh ' + projectName.toLowerCase() + preprodOption + dbOption, (error, stdout, stderr) => {
       console.log(stdout);
       console.error(stderr);
