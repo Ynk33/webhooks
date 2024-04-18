@@ -9,6 +9,14 @@ source .env
 # - LN_PATH
 ###
 
+configureServerBlockWordpress() {
+  configureServerBlock $1 $2 $3 $4 wordpress
+}
+
+configureServerBlockNext() {
+  configureServerBlock $1 $2 $3 $4 next
+}
+
 # Creates a new server-block for Nginx and configure it for the current URL
 configureServerBlock() {
   # PARAMETERS
@@ -16,10 +24,11 @@ configureServerBlock() {
   PROJECT_PATH=$2
   URL=$3
   SUFFIX=$4
+  PROJECT_TYPE=$5
 
   ## BODY
   # Create server block
-  copyTemplate $CONFIG_PATH"template"$SUFFIX $CONFIG_PATH$URL
+  copyTemplate $CONFIG_PATH"template-"$PROJECT_TYPE$SUFFIX $CONFIG_PATH$URL
 
   # Update server block
   updateURL $PROJECT_PATH $CONFIG_PATH$URL $URL
