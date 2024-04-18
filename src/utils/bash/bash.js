@@ -20,3 +20,9 @@ export async function runAndReturn(command, logErrors = true) {
 
   return stdout;
 }
+
+export async function runTest(command) {
+  console.log(`Before: ${command}`);
+  command = command.replace(/(\r\n|\n|\r)/gm,""); // TODO: Dirty fix, I need to find a way to really fix this.
+  console.log(`After: ${command}`);
+}

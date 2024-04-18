@@ -2,6 +2,7 @@ import express from "express";
 import handle from "./src/requestHandler";
 import deployWebhooks from "./src/webhooks/webhooksDeploy";
 import deployProject from "./src/project/projectDeploy";
+import { runTest } from "./src/utils/bash/bash";
 
 /**
  * CONFIG
@@ -39,12 +40,6 @@ app.listen(port, () => {
 /**
  * REMINDER: DEBUG
  */
-async function run(command) {
-  console.log(`Before: ${command}`);
-  command = command.replace(/(\r\n|\n|\r)/gm,""); // TODO: Dirty fix, I need to find a way to really fix this.
-  console.log(`After: ${command}`);
-}
-
 console.log("##### DEBUG #####");
 console.log();
 
@@ -53,7 +48,7 @@ let projectName = "nomadkatenext";
 let url = "nomadkatenext-preprod.yankadevlab.tech";
 let _port = "8100"; 
 let suffix = "-preprod";
-await run(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${_port} ${suffix}`);
+await runTest(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${_port} ${suffix}`);
 
 console.log();
 
@@ -62,7 +57,7 @@ projectName = "nomadkatenext";
 url = "nomadkatenext-preprod.yankadevlab.tech";
 _port = "8100"; 
 suffix = "preprod";
-await run(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${_port} ${suffix}`);
+await runTest(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${_port} ${suffix}`);
 
 console.log();
 console.log("##### END DEBUG #####");
