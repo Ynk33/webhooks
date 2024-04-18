@@ -5,7 +5,15 @@
 PROJECT_NAME=$1
 PROJECT_PATH=$2
 URL=$3
-SUFFIX=$4
+SUFFIX="$4"
+
+## DEBUG
+echo "##### SUFFIX: ${SUFFIX}"
+param=$(echo "${SUFFIX}" | tr -d '[:space:]')
+echo "##### Parameter: ${param}"
+echo "${SUFFIX}" | hexdump -C
+echo "${param}" | hexdump -C
+echo "##### END DEBUG #####"
 
 ## Sourcing
 source .env
