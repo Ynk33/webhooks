@@ -12,6 +12,7 @@ export function searchAndReplace(search, replace, filePath) {
       return console.log(err);
     }
 
+    search = search.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
     let regex = new RegExp(search, "g");
     let result = file.replace(regex, replace);
 
