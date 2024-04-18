@@ -12,6 +12,7 @@ export default function update(projectName, env, dbNeedsUpdate) {
    */
   console.log(`Updating project ${projectName}${suffix}.${domain}${dbNeedsUpdate ? ' with DB' : ''}...`);
 
+  // TODO: Implements project update
 
   /**
    * UPDATE

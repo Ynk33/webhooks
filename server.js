@@ -36,25 +36,3 @@ app.post("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Webhooks app listening on port ${port}`);
 });
-
-/**
- * TEST
- * REMINDER: TO REMOVE
- */
-console.log("################### TEST ###################");
-console.log();
-
-deploy("nomadkatewordpress", "preprod");
-console.log("-----");
-deploy("nomadkatewordpress", "prod");
-
-console.log();
-console.log("##########");
-console.log();
-
-deploy("newproject", "preprod");
-console.log("-----");
-deploy("newproject", "prod");
-
-console.log();
-console.log("################### END ###################");
