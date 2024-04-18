@@ -12,6 +12,7 @@ for i in $@
 do
   echo "##### PARAM: $i"
 done
+echo "##### END DEBUG PARAMS #####"
 
 ## DEBUG
 echo "##### PROJECT_NAME: ${PROJECT_NAME}"
