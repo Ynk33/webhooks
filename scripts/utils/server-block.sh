@@ -10,28 +10,44 @@ source .env
 ###
 
 configureServerBlockWordpress() {
-  configureServerBlock $1 $2 $3 $4 wordpress
-}
-
-configureServerBlockNext() {
-  configureServerBlock $1 $2 $3 $4 next
-}
-
-# Creates a new server-block for Nginx and configure it for the current URL
-configureServerBlock() {
   # PARAMETERS
   PROJECT_NAME=$1
   PROJECT_PATH=$2
   URL=$3
   SUFFIX=$4
-  PROJECT_TYPE=$5
 
   ## BODY
   # Create server block
-  copyTemplate $CONFIG_PATH"template-"$PROJECT_TYPE$SUFFIX $CONFIG_PATH$URL
+  copyTemplate $CONFIG_PATH"template-wordpress"$SUFFIX $CONFIG_PATH$URL
 
   # Update server block
-  updateURL $PROJECT_PATH $CONFIG_PATH$URL $URL
+  echo Updating server block...
+  updateServerBlock $CONFIG_PATH$URL __PATH__ $PROJECT_PATH
+  updateServerBlock $CONFIG_PATH$URL __URL__ $URL
+
+  link $CONFIG_PATH$URL $LN_PATH
+
+  # If preprod, configure .htpasswd
+  if [ ! -z $SUFFIX ]; then
+    configureHtpasswd $PROJECT_NAME$SUFFIX $CONFIG_PATH$URL
+  fi
+}
+
+configureServerBlockNext() {
+  # PARAMETERS
+  PROJECT_NAME=$1
+  URL=$2
+  PORT=$3
+  SUFFIX=$4
+
+  ## BODY
+  # Create server block
+  copyTemplate $CONFIG_PATH"template-next"$SUFFIX $CONFIG_PATH$URL
+
+  # Update server block
+  echo Updating server block...
+  updateServerBlock $CONFIG_PATH$URL __URL__ $URL
+  updateServerBlock $CONFIG_PATH$URL __PORT__ $PORT
 
   link $CONFIG_PATH$URL $LN_PATH
 
@@ -52,17 +68,15 @@ copyTemplate() {
   cp $TEMPLATE_SERVERBLOCK_PATH $SERVERBLOCK_PATH
 }
 
-# Update the URL of a server block.
-updateURL() {
+# Update the Project path of a server block.
+updateServerBlock() {
   # PARAMETERS
-  PROJECT_PATH=$1
-  SERVERBLOCK_PATH=$2
-  URL=$3
+  SERVERBLOCK_PATH=$1
+  PATTERN=$2
+  VALUE=$3
 
   # BODY
-  echo Updating server block...
-  sed -i "s|__PATH__|$PROJECT_PATH|g" $SERVERBLOCK_PATH
-  sed -i "s|__URL__|$URL|g" $SERVERBLOCK_PATH
+  sed -i "s|$PATTERN|$VALUE|g" $SERVERBLOCK_PATH
 }
 
 # Create a sym link in Nginx sites-enabled.

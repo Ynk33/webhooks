@@ -27,13 +27,14 @@ export async function create(projectName, env) {
 
   // Update .env file
   console.log("Setting up .env file...");
+  // Find a free port
+  const port = await runAndReturn("bash ./scripts/utils/net.sh");
+  // Copy the .env.sample file
   fs.copyFile(`${projectPath}/.env.sample`, `${projectPath}/.env`, async (err) => {
     if (err) {
       console.log("Error Found:", err);
     }
     else {
-      // Find a free port
-      const port = await runAndReturn("bash ./scripts/utils/net.sh");
       // Update .env file
       searchAndReplace("\[PORT\]", port, `${projectPath}/.env`);
       searchAndReplace("\[SET WORDPRESS API URL\]", `https://${url}`.replace(/next/g, "wordpress"), `${projectPath}/.env`);
@@ -53,7 +54,7 @@ export async function create(projectName, env) {
   // Nginx configuration
   console.log("Updating Nginx configuration...");
   await run(
-    `bash ./scripts/projects/next/setupServer.sh ${projectName} ${projectPath} ${url} ${suffix}`
+    `bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${port} ${suffix}`
   );
 
   // Run server with pm2
