@@ -24,20 +24,26 @@ export async function create(projectName, env) {
 
   // Git clone
   console.log(`Cloning ${repoUrl} at ${projectPath}...`);
-  git().clone(repoUrl, projectPath, {
+  await git().clone(repoUrl, projectPath, {
     "--branch": branch,
     "--recurse-submodules": true,
   });
 
   // Update .env file
   console.log("Setting up .env file...");
-  fs.copyFile(`${projectPath}/.env.sample`, `${projectPath}/.env`);
-  // Find a free port
-  const port = await runAndReturn("bash ./scripts/utils/net.sh");
-  // Update .env file
-  searchAndReplace("[PORT]", port, `${projectPath}/.env`);
-  searchAndReplace("[SET WORDPRESS API URL]", `https://${url}`.replace(/next/g, "wordpress"), `${projectPath}/.env`);
-  searchAndReplace("[SET WEBSITE URL]", `https://${url}`, `${projectPath}/.env`);
+  fs.copyFile(`${projectPath}/.env.sample`, `${projectPath}/.env`, async (err) => {
+    if (err) {
+      console.log("Error Found:", err);
+    }
+    else {
+      // Find a free port
+      const port = await runAndReturn("bash ./scripts/utils/net.sh");
+      // Update .env file
+      searchAndReplace("[PORT]", port, `${projectPath}/.env`);
+      searchAndReplace("[SET WORDPRESS API URL]", `https://${url}`.replace(/next/g, "wordpress"), `${projectPath}/.env`);
+      searchAndReplace("[SET WEBSITE URL]", `https://${url}`, `${projectPath}/.env`);
+    }
+});
   
 
   // npm install
