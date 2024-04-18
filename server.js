@@ -43,4 +43,12 @@ app.listen(port, () => {
  */
 console.log("################### TEST ###################");
 deploy("nomadkatewordpress", "preprod");
+console.log("-----");
+deploy("nomadkatewordpress", "prod");
+
+console.log("##########");
+
+deploy("newproject", "preprod");
+console.log("-----");
+deploy("newproject", "prod");
 console.log("################### END ###################");
