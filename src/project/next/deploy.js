@@ -1,9 +1,9 @@
 import fs from "fs";
 import Environments from "../../utils/enums/environments";
+import update from "./update";
+import { create } from "./create";
 
-export function deploy(projectName, env) {
-  // TODO: Deployment of a Next project
-
+export function deploy(projectName, env, dbNeedsUpdate) {
   /**
    * VARIABLES
    */
@@ -11,45 +11,15 @@ export function deploy(projectName, env) {
   const domain = process.env.DOMAIN;
   const suffix = env == Environments.PREPROD ? '-preprod' : '';
 
+  /**
+   * BODY
+   */
+  
   // Check if first deploy or update
-  console.log(`Checking if path exists: ${rootPath}/${projectName}${suffix}.${domain}...`);
   if (fs.existsSync(`${rootPath}/${projectName}${suffix}.${domain}`)) {
-    console.log("Project exists, update");
+    update(projectName, env, dbNeedsUpdate);
   }
   else {
-    console.log("Project does not exists, create");
+    create(projectName, env);
   }
-
-  /**
-   * FIRST DEPLOY
-   */
-
-  // Git clone
-
-  // If preprod, checkout develop
-
-  // npm install
-
-  // next build
-
-  // server block
-  // If preprod, don't forget the .htpasswd
-
-  // Certbot
-
-  // Run server with pm2
-
-
-  /**
-   * UPDATE
-   */
-
-  // git pull
-
-  // npm install
-
-  // next build
-
-  // Restart server with pm2
-
 }
