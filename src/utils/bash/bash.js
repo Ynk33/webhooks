@@ -18,6 +18,6 @@ export async function runAndReturn(command, logErrors = true) {
     console.warn(stderr);
   }
 
-  stdout = stdout.replace(/(\r\n|\n|\r)/gm,""); // Removes the trailing break line that echo always adds.
-  return stdout;
+  const result = stdout.replace(/(\r\n|\n|\r)/gm,""); // Removes the trailing break line that echo always adds.
+  return result;
 }
