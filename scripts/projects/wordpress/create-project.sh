@@ -44,7 +44,7 @@ echo Cloning $REPO_URL at $PROJECT_PATH...
 su - yanka -c "git clone --branch $BRANCH --recurse-submodules $REPO_URL $PROJECT_PATH"
 
 ## Create server block
-configureServerBlockWordpress $PROJECT_NAME $PROJECT_PATH $URL $SUFFIX
+configureServerBlockWordpress $PROJECT_NAME $PROJECT_PATH $URL "$SUFFIX"
 
 # Reload Nginx
 echo Reloading Nginx...
