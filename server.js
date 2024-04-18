@@ -42,5 +42,5 @@ app.listen(port, () => {
  * REMINDER: TO REMOVE
  */
 console.log("################### TEST ###################");
-deploy("nomadkatefront", "preprod");
+deploy("nomadkatewordpress", "preprod");
 console.log("################### END ###################");
