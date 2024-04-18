@@ -67,7 +67,7 @@ export async function create(projectName, env) {
 
   // Run server with pm2
   console.log(`Start pm2 process ${projectName}${suffix}...`);
-  await run(`pm2 start npm --name ${projectName}${suffix} --time -- start`);
+  await run(`cd ${projectPath} && pm2 start npm --name ${projectName}${suffix} --time -- start`);
   await run(`pm2 save`);
 
   console.log();
