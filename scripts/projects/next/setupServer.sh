@@ -13,7 +13,6 @@ source ./scripts/utils/server-block.sh
 source ./scripts/utils/certbot.sh
 
 ## Create server block
-# BUG: /bin/sh: 2: -preprod: not found
 echo "##### setupServer.sh: $SUFFIX"
 configureServerBlockNext $PROJECT_NAME $PROJECT_PATH $URL $SUFFIX
 
