@@ -44,11 +44,11 @@ export async function create(projectName, env) {
 
   // npm install
   console.log("Installing dependencies...");
-  await run(`su - yanka -c "cd ${projectPath} && npm install`);
+  await run(`su - yanka -c "cd ${projectPath} && npm install"`);
 
   // next build
   console.log("Build with NextJS...");
-  await run(`su - yanka -c "cd ${projectPath} && npm run build`);
+  await run(`su - yanka -c "cd ${projectPath} && npm run build"`);
 
   // Nginx configuration
   console.log("Updating Nginx configuration...");
