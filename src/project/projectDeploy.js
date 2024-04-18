@@ -10,7 +10,7 @@ import { deploy as deployNext } from "./next/deploy";
  * @param {import('express').Response} res The response. 
  * @returns 
  */
-export default function updateProject(githubPayload, res) {
+export default function deployProject(githubPayload, res) {
   
   // If push not main or develop branch, ignore and do nothing.
   if (githubPayload.env === Environments.NONE) {

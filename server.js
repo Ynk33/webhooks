@@ -1,9 +1,7 @@
 import express from "express";
 import handle from "./src/requestHandler";
-import updateWebhooks from "./src/webhooks/webhookUpdater";
-import updateProject from "./src/project/projectUpdater";
-import { deploy } from "./src/project/next/deploy";
-import { runAndReturn } from "./src/utils/bash/bash";
+import deployWebhooks from "./src/webhooks/webhooksDeploy";
+import deployProject from "./src/project/projectDeploy";
 
 /**
  * CONFIG
@@ -25,13 +23,13 @@ const port = 8008;
  */
 
 app.post("/webhooks", (req, res) => {
-  console.log("Connection on /webhooks, update attempt...");
-  handle(req, res, updateWebhooks);
+  console.log("Connection on /webhooks, webhooks deploy attempt...");
+  handle(req, res, deployWebhooks);
 });
 
 app.post("/", (req, res) => {
-  console.log("Connection on /, project update attempt...");
-  handle(req, res, updateProject);
+  console.log("Connection on /, project deploy attempt...");
+  handle(req, res, deployProject);
 });
 
 app.listen(port, () => {

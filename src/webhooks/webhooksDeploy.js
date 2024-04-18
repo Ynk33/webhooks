@@ -8,7 +8,7 @@ import GithubPayload from '../utils/github/GithubPayload';
  * @param {import('express').Response} res The response. 
  * @returns 
  */
-export default function updateWebhooks(githubPayload, res) {
+export default function deployWebhooks(githubPayload, res) {
 
   // If push not on main branch, do nothing.
   if (githubPayload.env !== Environments.PROD) {
