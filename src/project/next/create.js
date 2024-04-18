@@ -36,9 +36,19 @@ export async function create(projectName, env) {
     }
     else {
       // Update .env file
-      searchAndReplace("[PORT]", port, `${projectPath}/.env`);
-      searchAndReplace("[SET WORDPRESS API URL]", `https://${url}`.replace(/next/g, "wordpress"), `${projectPath}/.env`);
-      searchAndReplace("[SET WEBSITE URL]", `https://${url}`, `${projectPath}/.env`);
+      searchAndReplace(
+        [
+          "[PORT]",
+          "[SET WORDPRESS API URL]",
+          "[SET WEBSITE URL]"
+        ],
+        [
+          port,
+          `https://${url}`.replace(/next/g, "wordpress"),
+          `https://${url}`
+        ],
+        `${projectPath}/.env`
+      );
     }
 });
   
