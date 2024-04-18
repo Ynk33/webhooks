@@ -12,8 +12,8 @@ export function deploy(projectName, env) {
   const suffix = env == Environments.PREPROD ? '-preprod' : '';
 
   // Check if first deploy or update
-  console.log(`Checking if path exists: ${rootPath}/${projectName}${suffix}/${domain}...`);
-  if (fs.existsSync(`${rootPath}/${projectName}${suffix}/${domain}`)) {
+  console.log(`Checking if path exists: ${rootPath}/${projectName}${suffix}.${domain}...`);
+  if (fs.existsSync(`${rootPath}/${projectName}${suffix}.${domain}`)) {
     console.log("Project exists, update");
   }
   else {
