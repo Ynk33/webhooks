@@ -12,7 +12,7 @@ export default async function run(command, logErrors = true) {
 }
 
 export async function runAndReturn(command, logErrors = true) {
-  const { stoud, stderr } = await execute(command);
+  const { stdout, stderr } = await execute(command);
   if (logErrors) {
     console.warn(stderr);
   }
