@@ -42,7 +42,7 @@ configureServerBlockNext() {
 
   ## BODY
   # Create server block
-  copyTemplate $CONFIG_PATH"template-next"$SUFFIX $CONFIG_PATH$URL
+  copyTemplate $CONFIG_PATH"template-next-"$SUFFIX $CONFIG_PATH$URL
 
   # Update server block
   echo Updating server block...
@@ -53,7 +53,7 @@ configureServerBlockNext() {
 
   # If preprod, configure .htpasswd
   if [ ! -z $SUFFIX ]; then
-    configureHtpasswd $PROJECT_NAME$SUFFIX $CONFIG_PATH$URL
+    configureHtpasswd $PROJECT_NAME-$SUFFIX $CONFIG_PATH$URL
   fi
 }
 
