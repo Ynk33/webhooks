@@ -41,7 +41,7 @@ export default class GithubPayload {
    * @returns {boolean} Whether the webhooks must ignore this query or not.
    */
   get isIgnoringWebHooks() {
-    return this._payload.head_commit.message.includes("[IGNORE-WEBHOOKS]");
+    return this._payload.head_commit && this._payload.head_commit.message.includes("[IGNORE-WEBHOOKS]");
   }
 
   /**
