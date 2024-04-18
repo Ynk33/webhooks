@@ -8,7 +8,7 @@ export async function create(projectName, env) {
    * VARIABLES
    */
   const domain = process.env.DOMAIN;
-  const suffix = env == Environments.PREPROD ? "preprod" : "";
+  const suffix = env == Environments.PREPROD ? "-preprod" : "";
   const url = `${projectName}${suffix}.${domain}`;
   const projectPath = `${process.env.ROOT_PATH}/${url}`;
 
@@ -19,7 +19,7 @@ export async function create(projectName, env) {
    * BODY
    */
 
-  console.log(`Creating project ${projectName}-${suffix}.${domain}...`);
+  console.log(`Creating project ${projectName}${suffix}.${domain}...`);
 
   // Git clone
   console.log(`Cloning ${repoUrl} at ${projectPath}...`);
@@ -64,12 +64,12 @@ export async function create(projectName, env) {
   // Nginx configuration
   console.log("Updating Nginx configuration...");
   await run(
-    `bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${port} ${suffix}`
+    `bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${port} "${suffix}"`
   );
 
   // Run server with pm2
-  console.log(`Start pm2 process ${projectName}-${suffix}...`);
-  await run(`pm2 start npm --name ${projectName}-${suffix} --time -- start`);
+  console.log(`Start pm2 process ${projectName}${suffix}...`);
+  await run(`pm2 start npm --name ${projectName}${suffix} --time -- start`);
 
   console.log();
   console.log("Deployment complete!");
