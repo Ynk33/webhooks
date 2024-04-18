@@ -2,7 +2,6 @@ import express from "express";
 import handle from "./src/requestHandler";
 import deployWebhooks from "./src/webhooks/webhooksDeploy";
 import deployProject from "./src/project/projectDeploy";
-import run, { runTest } from "./src/utils/bash/bash";
 
 /**
  * CONFIG
@@ -36,28 +35,3 @@ app.post("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Webhooks app listening on port ${port}`);
 });
-
-/**
- * REMINDER: DEBUG
- */
-console.log("##### DEBUG #####");
-console.log();
-
-console.log("##### First test");
-let projectName = "nomadkatenext";
-let url = "nomadkatenext-preprod.yankadevlab.tech";
-let _port = "8100"; 
-let suffix = "-preprod";
-await run(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${_port} ${suffix}`);
-
-console.log();
-
-console.log("##### Second test");
-projectName = "nomadkatenext";
-url = "nomadkatenext-preprod.yankadevlab.tech";
-_port = "8100"; 
-suffix = "preprod";
-await run(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${_port} ${suffix}`);
-
-console.log();
-console.log("##### END DEBUG #####");
