@@ -1,3 +1,4 @@
+import Environments from "../../utils/enums/environments";
 
 export function create(projectName, env) {
   /**
@@ -11,7 +12,7 @@ export function create(projectName, env) {
    */
   console.log(`Creating project ${projectName}${suffix}.${domain}...`);
 
-  
+
   /**
    * FIRST DEPLOY
    */

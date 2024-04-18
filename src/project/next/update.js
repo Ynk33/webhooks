@@ -1,3 +1,5 @@
+import Environments from "../../utils/enums/environments";
+
 export default function update(projectName, env, dbNeedsUpdate) {
   /**
    * VARIABLES
