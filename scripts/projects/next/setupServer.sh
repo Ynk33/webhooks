@@ -8,12 +8,10 @@ URL=$3
 SUFFIX="$4"
 
 ## DEBUG
+echo "##### PROJECT_NAME: ${PROJECT_NAME}"
+echo "##### PROJECT_PATH: ${PROJECT_PATH}"
+echo "##### URL: ${URL}"
 echo "##### SUFFIX: ${SUFFIX}"
-param=$(echo "${SUFFIX}" | tr -d '[:space:]')
-echo "##### Parameter: ${param}"
-echo "${SUFFIX}" | hexdump -C
-echo "${param}" | hexdump -C
-echo "##### END DEBUG #####"
 
 ## Sourcing
 source .env
