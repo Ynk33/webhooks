@@ -37,11 +37,19 @@ export default class GithubPayload {
   }
 
   /**
+   * Check if the request contains a commit or not.
+   * @returns {boolean} True if the request contains a commit, false otherwise.
+   */
+  get isACommit() {
+    return this._payload.head_commit !== undefined;
+  }
+
+  /**
    * Assess if the last commit requires to ignore webhooks.
    * @returns {boolean} Whether the webhooks must ignore this query or not.
    */
   get isIgnoringWebHooks() {
-    return !this._payload.head_commit || this._payload.head_commit.message.includes("[IGNORE-WEBHOOKS]");
+    return this._payload.head_commit.message.includes("[IGNORE-WEBHOOKS]");
   }
 
   /**
