@@ -35,3 +35,34 @@ app.post("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Webhooks app listening on port ${port}`);
 });
+
+/**
+ * REMINDER: DEBUG
+ */
+export function run(command) {
+  console.log(`Before: ${command}`);
+  command = command.replace(/(\r\n|\n|\r)/gm,""); // TODO: Dirty fix, I need to find a way to really fix this.
+  console.log(`After: ${command}`);
+}
+
+console.log("##### DEBUG #####");
+console.log();
+
+console.log("##### First test");
+let projectName = "nomadkatenext";
+let url = "nomadkatenext-preprod.yankadevlab.tech";
+let _port = "8100"; 
+let suffix = "-preprod";
+run(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${_port} ${suffix}`);
+
+console.log();
+
+console.log("##### Second test");
+projectName = "nomadkatenext";
+url = "nomadkatenext-preprod.yankadevlab.tech";
+_port = "8100"; 
+suffix = "preprod";
+run(`bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${_port} ${suffix}`);
+
+console.log();
+console.log("##### END DEBUG #####");
