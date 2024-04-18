@@ -35,9 +35,9 @@ export async function create(projectName, env) {
       // Find a free port
       const port = await runAndReturn("bash ./scripts/utils/net.sh");
       // Update .env file
-      searchAndReplace("[PORT]", port, `${projectPath}/.env`);
-      searchAndReplace("[SET WORDPRESS API URL]", `https://${url}`.replace(/next/g, "wordpress"), `${projectPath}/.env`);
-      searchAndReplace("[SET WEBSITE URL]", `https://${url}`, `${projectPath}/.env`);
+      searchAndReplace("\[PORT\]", port, `${projectPath}/.env`);
+      searchAndReplace("\[SET WORDPRESS API URL\]", `https://${url}`.replace(/next/g, "wordpress"), `${projectPath}/.env`);
+      searchAndReplace("\[SET WEBSITE URL\]", `https://${url}`, `${projectPath}/.env`);
     }
 });
   
