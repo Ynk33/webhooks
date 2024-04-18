@@ -1,4 +1,5 @@
 import { simpleGit as git } from "simple-git";
+import fs from "fs";
 import Environments from "../../utils/enums/environments";
 import run from "../../utils/bash/bash";
 
@@ -26,6 +27,12 @@ export async function create(projectName, env) {
     "--branch": branch,
     "--recurse-submodules": true,
   });
+
+  // Updat .env file
+  console.log("Setting up .env file...");
+  fs.copyFile(`${projectPath}/.env.sample`, `${projectPath}/.env`);
+  // TODO: Replace vars inside .env file (PORT, NEXT_PUBLIC_WORDPRESS_API_URL, NEXT_PUBLIC_ROOT_URL)
+  // TODO: Find a free port
 
   // npm install
   console.log("Installing dependencies...");
