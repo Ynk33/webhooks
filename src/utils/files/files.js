@@ -13,7 +13,7 @@ export function searchAndReplace(searches, replaces, filePath) {
     }
 
     for (let i = 0; i < searches.length; i++) {
-      const search = searches[i];
+      let search = searches[i];
       const replace = replaces[i];
 
       search = search.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
