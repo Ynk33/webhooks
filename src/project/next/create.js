@@ -1,4 +1,3 @@
-import { simpleGit as git } from "simple-git";
 import fs from "fs";
 import Environments from "../../utils/enums/environments";
 import run, { runAndReturn } from "../../utils/bash/bash";
@@ -24,10 +23,7 @@ export async function create(projectName, env) {
 
   // Git clone
   console.log(`Cloning ${repoUrl} at ${projectPath}...`);
-  await git().clone(repoUrl, projectPath, {
-    "--branch": branch,
-    "--recurse-submodules": true,
-  });
+  await run(`su - yanka -c "git clone --branch ${branch} --recurse-submodules ${repoUrl} ${projectPath}"`);
 
   // Update .env file
   console.log("Setting up .env file...");
