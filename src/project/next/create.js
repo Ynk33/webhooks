@@ -63,6 +63,7 @@ export async function create(projectName, env) {
 
   // Nginx configuration
   console.log("Updating Nginx configuration...");
+  console.log(`##### create.js: ${suffix}`);
   await run(
     `bash ./scripts/projects/next/setupServer.sh ${projectName} ${url} ${port} ${suffix}`
   );

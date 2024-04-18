@@ -40,6 +40,8 @@ configureServerBlockNext() {
   PORT=$3
   SUFFIX=$4
 
+  echo "##### server-block.sh: $SUFFIX"
+
   ## BODY
   # Create server block
   copyTemplate $CONFIG_PATH"template-next"$SUFFIX $CONFIG_PATH$URL
@@ -52,7 +54,7 @@ configureServerBlockNext() {
   link $CONFIG_PATH$URL $LN_PATH
 
   # If preprod, configure .htpasswd
-  if [ ! -z $SUFFIX ]; then
+  if [ ! -z "${SUFFIX}" ]; then
     configureHtpasswd $PROJECT_NAME$SUFFIX $CONFIG_PATH$URL
   fi
 }
