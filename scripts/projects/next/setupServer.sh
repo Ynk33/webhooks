@@ -7,6 +7,12 @@ PROJECT_PATH=$2
 URL=$3
 SUFFIX="$4"
 
+echo "##### DEBUG PARAMS #####"
+for i in $@
+do
+  echo "##### PARAM: $i"
+done
+
 ## DEBUG
 echo "##### PROJECT_NAME: ${PROJECT_NAME}"
 echo "##### PROJECT_PATH: ${PROJECT_PATH}"
