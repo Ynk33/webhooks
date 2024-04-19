@@ -38,14 +38,24 @@ export async function create(projectName, env) {
       // Update .env file
       searchAndReplace(
         [
+          // Local
+          "[PROTOCOL]",
+          "[HOST]",
           "[PORT]",
-          "[SET WORDPRESS API URL]",
-          "[SET WEBSITE URL]"
+          // Wordpress
+          "[WORDPRESS_API_PROTOCOL]",
+          "[WORDPRESS_API_HOST]",
+          "[WORDPRESS_API_PORT]"
         ],
         [
+          // Local
+          "https",
+          url,
           port,
-          `https://${url}`.replace(/next/g, "wordpress"),
-          `https://${url}`
+          // Wordpress
+          "https",
+          url.replace(/next/g, "wordpress"),
+          "" // No port for Wordpress
         ],
         `${projectPath}/.env`
       );
