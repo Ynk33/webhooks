@@ -41,7 +41,7 @@ export default function deployProject(githubPayload, res) {
 
     // Deployment of Next project
 
-    deployNext(projectName.toLowerCase(), githubPayload.env, githubPayload.dbNeedsUpdate);
+    deployNext(projectName.toLowerCase(), githubPayload.env);
   }
   else {
     return;

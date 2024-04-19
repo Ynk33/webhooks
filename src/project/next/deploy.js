@@ -3,7 +3,12 @@ import Environments from "../../utils/enums/environments";
 import update from "./update";
 import { create } from "./create";
 
-export function deploy(projectName, env, dbNeedsUpdate) {
+/**
+ * Deploy a NextJS project.
+ * @param {string} projectName The project name.
+ * @param {string} env The deployment environment.
+ */
+export function deploy(projectName, env) {
   /**
    * VARIABLES
    */
@@ -17,7 +22,7 @@ export function deploy(projectName, env, dbNeedsUpdate) {
   
   // Check if first deploy or update
   if (fs.existsSync(`${rootPath}/${projectName}${suffix}.${domain}`)) {
-    update(projectName, env, dbNeedsUpdate);
+    update(projectName, env);
   }
   else {
     create(projectName, env);

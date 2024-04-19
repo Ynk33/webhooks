@@ -3,6 +3,11 @@ import Environments from "../../utils/enums/environments";
 import run, { runAndReturn } from "../../utils/bash/bash";
 import { searchAndReplace } from "../../utils/files/files";
 
+/**
+ * Deploy a new NextJS project on the server.
+ * @param {string} projectName The project name.
+ * @param {string} env The deployment Environment.
+ */
 export async function create(projectName, env) {
   /**
    * VARIABLES
@@ -62,7 +67,6 @@ export async function create(projectName, env) {
     }
 });
   
-
   // npm install
   console.log("Installing dependencies...");
   await run(`su - yanka -c "cd ${projectPath} && npm install"`);
