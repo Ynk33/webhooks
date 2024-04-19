@@ -43,9 +43,9 @@ export async function create(projectName, env) {
           "[HOST]",
           "[PORT]",
           // Wordpress
-          "[WORDPRESS_API_PROTOCOL]",
-          "[WORDPRESS_API_HOST]",
-          "[WORDPRESS_API_PORT]"
+          "[WP_PROTOCOL]",
+          "[WP_HOST]",
+          "[WP_PORT]"
         ],
         [
           // Local
