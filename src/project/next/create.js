@@ -81,8 +81,8 @@ export async function create(projectName, env) {
 
   // Run server with pm2
   console.log(`Start pm2 process ${projectName}${suffix}...`);
-  await run(`cd ${projectPath} && pm2 start npm --name ${projectName}${suffix} --time -- start`);
-  await run(`pm2 save`);
+  await run(`su - yanka -c "cd ${projectPath} && pm2 start npm --name ${projectName}${suffix} --time -- start"`);
+  await run(`su - yanka -c "pm2 save"`);
 
   console.log();
   console.log("Deployment complete!");

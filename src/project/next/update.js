@@ -36,7 +36,7 @@ export default async function update(projectName, env) {
 
   // Restart server with pm2
   console.log(`Restart pm2 process ${projectName}${suffix}...`);
-  await run(`pm2 restart ${projectName}${suffix} --time`);
+  await run(`su - yanka -c "pm2 restart ${projectName}${suffix} --time"`);
 
   console.log();
   console.log("Deployment complete!");
