@@ -13,6 +13,7 @@ export async function create(projectName, env) {
    * VARIABLES
    */
   const domain = process.env.DOMAIN;
+  const user = process.env.SERVER_USER;
   const suffix = env == Environments.PREPROD ? "-preprod" : "";
   const url = `${projectName}${suffix}.${domain}`;
   const projectPath = `${process.env.ROOT_PATH}/${url}`;
@@ -28,7 +29,7 @@ export async function create(projectName, env) {
 
   // Git clone
   console.log(`Cloning ${repoUrl} at ${projectPath}...`);
-  await run(`su - yanka -c "git clone --branch ${branch} --recurse-submodules ${repoUrl} ${projectPath}"`);
+  await run(`su - ${user} -c "git clone --branch ${branch} --recurse-submodules ${repoUrl} ${projectPath}"`);
 
   // Update .env file
   console.log("Setting up .env file...");
@@ -69,11 +70,11 @@ export async function create(projectName, env) {
   
   // npm install
   console.log("Installing dependencies...");
-  await run(`su - yanka -c "cd ${projectPath} && npm install"`);
+  await run(`su - ${user} -c "cd ${projectPath} && npm install"`);
 
   // next build
   console.log("Build with NextJS...");
-  await run(`su - yanka -c "cd ${projectPath} && npm run build"`);
+  await run(`su - ${user} -c "cd ${projectPath} && npm run build"`);
 
   // Nginx configuration
   console.log("Updating Nginx configuration...");
@@ -81,8 +82,8 @@ export async function create(projectName, env) {
 
   // Run server with pm2
   console.log(`Start pm2 process ${projectName}${suffix}...`);
-  await run(`su - yanka -c "cd ${projectPath} && pm2 start npm --name ${projectName}${suffix} --time -- start"`);
-  await run(`su - yanka -c "pm2 save"`);
+  await run(`su - ${user} -c "cd ${projectPath} && pm2 start npm --name ${projectName}${suffix} --time -- start"`);
+  await run(`su - ${user} -c "pm2 save"`);
 
   console.log();
   console.log("Deployment complete!");

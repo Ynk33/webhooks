@@ -7,6 +7,7 @@ source .env
 # Sets:
 # - CONFIG_PATH
 # - LN_PATH
+# - HTPASSWD_PATH
 ###
 
 configureServerBlockWordpress() {
@@ -99,10 +100,9 @@ configureHtpasswd() {
   SERVERBLOCK_PATH=$2
 
   # VARIABLES
-  HTPASSWD_DIR=/etc/nginx/.passwd
-  PROJECT_HTPASSWD_DIR=$HTPASSWD_DIR/$PROJECT_NAME
+  PROJECT_HTPASSWD_DIR=$HTPASSWD_PATH/$PROJECT_NAME
 
-  HTPASSWD=$HTPASSWD_DIR/.htpasswd
+  HTPASSWD=$HTPASSWD_PATH/.htpasswd
   PROJECT_HTPASSWD=$PROJECT_HTPASSWD_DIR/.htpasswd
 
   # BODY
