@@ -1,4 +1,4 @@
 
 # Webhooks
 
-A NodeJS server to handle webhook POST requests sent by Github.
+A NodeJS deployment server handling webhook POST requests sent by Github to install and update projects on a Nginx server.
