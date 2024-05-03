@@ -38,7 +38,7 @@ DB_SUFFIX="${SUFFIX/-preprod/_preprod}"
 DB_FULL_NAME="$DB_NAME_PREFIX$PROJECT_NAME$DB_SUFFIX"
 
 ## Git pull changes
-su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules"
+su - yanka -c "cd $PROJECT_PATH && git pull --recurse-submodules && git submodule update --remote --merge"
 
 # In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, use the dump in the project.
 if [ ! -z $UPDATE_DB ]
