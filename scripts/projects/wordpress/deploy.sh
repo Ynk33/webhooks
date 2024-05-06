@@ -19,7 +19,6 @@ source .env
 PROJECT_NAME=$1
 SUFFIX=""
 OPTION_PREPROD=""
-OPTION_DB=""
 
 # Check if project-name is given
 if [[ -z $PROJECT_NAME ]] || [[ $PROJECT_NAME == -* ]];
@@ -46,9 +45,6 @@ do
       SUFFIX="-preprod"
       OPTION_PREPROD=" --preprod"
       ;;
-    --db)
-      OPTION_DB=" --db"
-      ;;
     *)
       echo "Error: Invalid option $i"
       Help
@@ -62,7 +58,7 @@ if [ -d "$ROOT_PATH/$PROJECT_NAME$SUFFIX.$DOMAIN" ]; then
   # Launch update-project.sh
   echo "Updating project $PROJECT_NAME$SUFFIX.$DOMAIN..."
   echo
-  bash ./scripts/projects/wordpress/update-project.sh $PROJECT_NAME $OPTION_PREPROD $OPTION_DB
+  bash ./scripts/projects/wordpress/update-project.sh $PROJECT_NAME $OPTION_PREPROD
 else
   # Launch create-project.sh
   echo "Creating project $PROJECT_NAME$SUFFIX.$DOMAIN..."

@@ -59,29 +59,6 @@ createDb $DB_FULL_NAME
 ## Give wpadmin priviledges on this db
 grantPrivileges $DB_FULL_NAME
 
-# In case of prod, if there is a preprod, use a dump of the preprod db. Otherwise, use the dump in the project.
-if [ ! -z $SUFFIX ]
-then
-  ## Apply dump.sql
-  applyDump $DB_FULL_NAME $PROJECT_PATH --full
-else
-  # Check if there is a preprod db
-  echo "Checking if ${DB_FULL_NAME}_preprod exists..."
-  DB_EXIST=$(dbExists $DB_FULL_NAME"_preprod")
-  if [ -z "${DB_EXIST}" ]
-  then
-    # No preprod
-    ## Apply dump.sql
-    applyDump $DB_FULL_NAME $PROJECT_PATH --full
-  else
-    ### Preprod exists: use a dump of the preprod db to fill the prod db
-    applyDumpFromPreprod $DB_FULL_NAME
-  fi
-fi
-
-## Updates options in the database
-updateWpOptions $DB_FULL_NAME $URL
-
 ## Update wp-config.php with new salts and all db information
 echo Create wp-config.php...
 su - yanka -c "cp $PROJECT_PATH/wp-config-sample.php $PROJECT_PATH/wp-config.php"
@@ -97,10 +74,6 @@ echo Update salts in wp-config.php...
 SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
 STRING='put your unique phrase here'
 printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s $PROJECT_PATH/wp-config.php
-
-## Reverting changes
-echo Cleaning up...
-su - yanka -c "cd $PROJECT_PATH && git checkout -- ."
 
 ## The end
 echo -e "\033[32mDeployment complete!\033[0m"
