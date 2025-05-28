@@ -3,6 +3,7 @@ import Environments from '../utils/enums/environments';
 import GithubPayload from '../utils/github/GithubPayload';
 import ProjectTypes from '../utils/enums/projectTypes';
 import { deploy as deployNext } from "./next/deploy";
+import { deploy as deployPerso } from "./perso/deploy";
 
 /**
  * Update the project defined in the push payload, in preprod or prod based on the branch that has been pushed.
@@ -42,6 +43,12 @@ export default function deployProject(githubPayload, res) {
     // Deployment of Next project
 
     deployNext(projectName.toLowerCase(), githubPayload.env);
+  }
+  else if (projectName.toLowerCase().includes(ProjectTypes.PERSO)) {
+
+    // Deployment of personal project
+
+    deployPerso();
   }
   else {
     return;

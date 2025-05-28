@@ -4,4 +4,5 @@
 export default class ProjectTypes {
   static WORDPRESS = "wordpress";
   static NEXT = "next";
+  static PERSO = "yannicktirand";
 }
