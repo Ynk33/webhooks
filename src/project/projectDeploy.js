@@ -20,8 +20,8 @@ export default function deployProject(githubPayload, res) {
 
   const projectName = githubPayload.projectName;
 
-  console.log('[' + projectName + '] deploy-' + githubPayload.env);
   console.log(projectName + " includes " + ProjectTypes.PERSO + " ? " + projectName.toLowerCase().includes(ProjectTypes.PERSO));
+  console.log('[' + projectName + '] deploy-' + githubPayload.env);
 
   if (projectName.toLowerCase().includes(ProjectTypes.WORDPRESS)) {
 
