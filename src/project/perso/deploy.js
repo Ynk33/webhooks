@@ -24,7 +24,7 @@ export async function deploy() {
 
   // hugo build
   console.log("Build with Hugo...");
-  await run(`su - ${user} -c "cd ${projectPath} && hugo build --cleanDestinationDir --minify"`);
+  await run('hugo build --cleanDestinationDir --minify');
 
   console.log();
   console.log("Deployment complete!");
